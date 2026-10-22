@@ -11,6 +11,7 @@
   window.supabase = supabase;
 </script>
 <style>
+/* ... (نفس التصميم الذي أرسلته أنت بالضبط) ... */
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:#eef2ff;min-height:100vh;color:#1e293b;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px at 10% 0%, rgba(91,141,239,.18), transparent),radial-gradient(600px at 90% 100%, rgba(139,92,246,.15), transparent);pointer-events:none}
@@ -34,6 +35,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
 .island input::placeholder{color:#94a3b8}
 .sugs{display:none;margin-top:18px;flex:1;overflow-y:auto}
 .island.expanded .sugs{display:block}
+.sugGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sug{padding:12px;background:#fff;border:1px solid rgba(91,141,239,.12);border-radius:14px;display:flex;gap:10px;align-items:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.sug img{width:36px;height:36px;border-radius:50%}
 /* قصص */
 .stories{display:flex;gap:14px;overflow-x:auto;padding:8px 2px 12px;scrollbar-width:none}
 .stories::-webkit-scrollbar{display:none}
@@ -138,8 +142,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
   };
 
   window.handleAuth = async () => {
+    // تنظيف اسم المستخدم من المسافات والرموز
     const usernameInput = document.getElementById('username').value;
-    // إزالة أي مسافات أو رموز غريبة
     const username = usernameInput.trim().replace(/\s+/g, '').replace(/[^a-zA-Z0-9_]/g, '');
     const password = document.getElementById('password').value;
     
