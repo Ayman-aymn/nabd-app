@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>نبض - Nabd</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
 <script type="module">
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
   const supabase = createClient('https://lmgshabrtmvbnpdhkkst.supabase.co', 'sb_publishable_XCTUMu79wWd2wQFmM51vVg_nec2Glwb')
@@ -12,102 +12,250 @@
 </script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif}
-body{background:#050a18;min-height:100vh;color:#fff}
-.app{max-width:410px;margin:0 auto;padding:10px;min-height:100vh;display:flex;flex-direction:column}
-.header{background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.12);border-radius:22px;padding:12px 14px;display:flex;align-items:center;gap:12px}
-.heart{width:54px;height:48px;filter:drop-shadow(0 0 6px gold)}
-.logo{font-size:40px;font-weight:900;color:#00ff99}
-.search{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:12px;color:#fff;outline:none;margin-bottom:14px}
-.chat{display:flex;align-items:center;gap:12px;padding:14px;border-radius:20px;margin-bottom:10px;background:rgba(255,255,255,0.07);border:2px solid transparent;cursor:pointer}
-.chat.green{border-color:#00ff99}.chat.purple{border-color:#b86bff}
-.avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;flex-shrink:0}
-.green .avatar{background:radial-gradient(circle, #0a2a1f, #000);border:1.5px solid #00ff99;color:#00ff99}
-.purple .avatar{background:radial-gradient(circle, #1f0a2a, #000);border:1.5px solid #b86bff;color:#b86bff}
-.info{flex:1;min-width:0}.name{font-size:17px;font-weight:800}.last{font-size:13px;opacity:0.7}
-#chatView{display:none;flex-direction:column;flex:1}
-.bubble{max-width:80%;padding:12px;border-radius:18px;margin-bottom:10px;font-size:14px;line-height:1.5;position:relative;word-break:break-word}
-.bubble.p{align-self:flex-start;background:rgba(184,107,255,0.12);border:2px solid #b86bff}
-.bubble.g{align-self:flex-end;background:rgba(0,255,153,0.10);border:2px solid #00ff99}
-.bt{font-size:11px;opacity:0.6;margin-top:6px;display:block;text-align:left}
-.inputBar{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);width:calc(100% - 20px);max-width:410px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:26px;padding:8px 10px;display:flex;align-items:center;gap:8px;z-index:10}
-.inputBar input{flex:1;background:rgba(255,255,255,0.08);border:none;border-radius:18px;padding:10px 12px;color:#fff;outline:none}
-.plus{font-size:26px;color:#b86bff;cursor:pointer}
-.send{width:40px;height:40px;border-radius:50%;background:rgba(0,255,153,0.12);border:1.8px solid #00ff99;color:#00ff99;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px}
+body{background:#020617 url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop') no-repeat center center/cover;background-attachment:fixed;min-height:100vh;color:#fff;display:flex;justify-content:center;align-items:center}
+.app{width:100%;max-width:420px;height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden;backdrop-filter:blur(10px);background:rgba(2,6,23,0.6)}
+.glass{background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:20px}
+/* شاشة الدخول */
+#authScreen{display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%;padding:20px;gap:15px}
+#authScreen h1{font-size:48px;color:#00ff99;text-shadow:0 0 20px #00ff99}
+#authScreen input{width:100%;padding:15px;border-radius:15px;border:1px solid #00ff99;background:rgba(0,0,0,0.5);color:#fff;font-size:16px;text-align:center;outline:none}
+#authScreen button{width:100%;padding:15px;border-radius:15px;border:none;background:#00ff99;color:#020617;font-weight:900;font-size:18px;cursor:pointer;box-shadow:0 0 15px #00ff99}
+#authScreen .switch{color:#b86bff;cursor:pointer;text-decoration:underline;font-size:14px}
+/* شاشة الدردشات */
+#listView{display:none;flex-direction:column;height:100%;overflow-y:auto;padding:15px}
+.header{padding:15px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:32px;font-weight:900;color:#00ff99;text-shadow:0 0 10px #00ff99}
+.heart{width:40px;height:40px;filter:drop-shadow(0 0 5px gold)}
+.chat-card{display:flex;align-items:center;gap:12px;padding:15px;margin-bottom:10px;border-radius:20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);cursor:pointer;transition:0.3s}
+.chat-card:hover{background:rgba(255,255,255,0.1)}
+.avatar{width:50px;height:50px;border-radius:50%;background:#020617;border:2px solid #00ff99;display:flex;justify-content:center;align-items:center;font-weight:900;color:#00ff99}
+/* شاشة المحادثة */
+#chatView{display:none;flex-direction:column;height:100%;padding:10px}
+#msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:10px}
+.bubble{max-width:80%;padding:12px;border-radius:18px;font-size:14px;position:relative;word-break:break-word}
+.bubble.me{align-self:flex-end;background:rgba(0,255,153,0.1);border:1px solid #00ff99}
+.bubble.other{align-self:flex-start;background:rgba(184,107,255,0.1);border:1px solid #b86bff}
+.inputBar{display:flex;gap:8px;padding:10px;background:rgba(255,255,255,0.05);border-radius:25px;align-items:center}
+.inputBar input{flex:1;background:transparent;border:none;color:#fff;outline:none}
+.send{width:40px;height:40px;border-radius:50%;background:#00ff99;color:#020617;border:none;display:flex;justify-content:center;align-items:center;cursor:pointer}
 </style>
 </head>
 <body>
 <div class="app">
+  <!-- شاشة تسجيل الدخول -->
+  <div id="authScreen">
+    <svg class="heart" viewBox="0 0 100 80" style="width:80px;height:80px"><path d="M50 65 C15 45, 2 28, 26 18 C34 13, 44 16, 50 24 C56 16, 66 13, 74 18 C98 28, 85 45, 50 65 Z" fill="none" stroke="gold" stroke-width="4"/><path d="M10 38 L32 38 L38 26 L44 50 L50 34 L58 42 L72 38 L90 38" fill="none" stroke="gold" stroke-width="3" stroke-linecap="round"/></svg>
+    <h1>نبض</h1>
+    <input type="email" id="email" placeholder="البريد الإلكتروني" />
+    <input type="password" id="password" placeholder="كلمة المرور" />
+    <button id="authBtn" onclick="handleAuth()">تسجيل الدخول</button>
+    <p class="switch" id="switchMode" onclick="toggleAuthMode()">ليس لديك حساب؟ إنشاء حساب</p>
+  </div>
+
+  <!-- شاشة الدردشات -->
   <div id="listView">
-    <div class="header"><svg class="heart" viewBox="0 0 100 80"><path d="M50 65 C15 45, 2 28, 26 18 C34 13, 44 16, 50 24 C56 16, 66 13, 74 18 C98 28, 85 45, 50 65 Z" fill="none" stroke="gold" stroke-width="4"/><path d="M10 38 L32 38 L38 26 L44 50 L50 34 L58 42 L72 38 L90 38" fill="none" stroke="gold" stroke-width="3" stroke-linecap="round"/></svg><div class="logo">نبض</div></div>
-    <input class="search" id="searchInput" placeholder="🔍 بحث..." oninput="filterChats(this.value)">
-    <div style="color:#b86bff;font-weight:800;margin-bottom:8px">الدردشات</div>
-    <div id="chatList"></div>
+    <div class="header">
+      <div class="logo">نبض</div>
+      <button onclick="logout()" style="background:none;border:none;color:#ef4444;font-size:14px;cursor:pointer">خروج</button>
+    </div>
+    <div id="chatList" style="display:flex;flex-direction:column;gap:10px"></div>
+    <div style="margin-top:auto;padding:15px;display:flex;gap:10px">
+      <input id="newChatUser" placeholder="ابحث عن مستخدم..." style="flex:1;padding:12px;border-radius:15px;border:1px solid #00ff99;background:rgba(0,0,0,0.5);color:#fff;outline:none">
+      <button onclick="startChat()" style="padding:12px 20px;border-radius:15px;border:none;background:#00ff99;color:#020617;font-weight:900;cursor:pointer">بدء</button>
+    </div>
   </div>
+
+  <!-- شاشة المحادثة -->
   <div id="chatView">
-    <div class="header"><span style="font-size:24px;color:#b86bff;cursor:pointer" onclick="closeChat()">›</span><svg class="heart" style="width:40px;height:36px" viewBox="0 0 100 80"><path d="M50 65 C15 45, 2 28, 26 18 C34 13, 44 16, 50 24 C56 16, 66 13, 74 18 C98 28, 85 45, 50 65 Z" fill="none" stroke="gold" stroke-width="4"/></svg><div style="flex:1"><div id="chatName" style="font-weight:800"></div></div></div>
-    <div style="flex:1;padding:14px 0;display:flex;flex-direction:column;gap:2px;overflow-y:auto" id="msgs"></div>
+    <div class="header">
+      <button onclick="closeChat()" style="background:none;border:none;color:#00ff99;font-size:24px;cursor:pointer">›</button>
+      <span id="chatName" style="font-weight:900;font-size:18px"></span>
+    </div>
+    <div id="msgs"></div>
+    <div class="inputBar">
+      <input id="msgInput" placeholder="اكتب رسالة..." onkeydown="if(event.key==='Enter')sendMsg()">
+      <button class="send" onclick="sendMsg()">➤</button>
+    </div>
   </div>
 </div>
-<div class="inputBar" id="inputBar" style="display:none">
-  <span class="plus" onclick="sendImage()">+</span>
-  <input id="msgInput" placeholder="اكتب رسالة..." onkeydown="if(event.key==='Enter')sendMsg()">
-  <div class="send" onclick="sendMsg()">➤</div>
-</div>
+
 <script type="module">
-  const chats = [
-    {name:'أحمد خالد', last:'تمام، سأرسل الملف', color:'green'},
-    {name:'سارة محمود', last:'شكراً لردك', color:'purple'},
-    {name:'فريق المشروع', last:'تم تحديث المستندات', color:'green'}
-  ]
-  let currentChat = null
-  let myName = "أنا"
+  let isLogin = true;
+  let currentConversationId = null;
+  let currentUser = null;
+  let currentUserName = null;
 
-  function renderChats(list=chats){
-    document.getElementById('chatList').innerHTML = list.map(c=>`
-      <div class="chat ${c.color}" onclick="openChat('${c.name}')">
-        <div class="avatar">${c.name[0]}</div>
-        <div class="info"><div class="name">${c.name}</div><div class="last">${c.last}</div></div>
-      </div>`).join('')
+  // التبديل بين تسجيل الدخول وإنشاء الحساب
+  window.toggleAuthMode = () => {
+    isLogin = !isLogin;
+    document.getElementById('authBtn').innerText = isLogin ? 'تسجيل الدخول' : 'إنشاء حساب';
+    document.getElementById('switchMode').innerText = isLogin ? 'ليس لديك حساب؟ إنشاء حساب' : 'لديك حساب؟ تسجيل الدخول';
+  };
+
+  // التعامل مع المصادقة
+  window.handleAuth = async () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    if (!email || !password) return alert('يرجى ملء جميع الحقول');
+    
+    let result;
+    if (isLogin) {
+      result = await window.supabase.auth.signInWithPassword({ email, password });
+    } else {
+      result = await window.supabase.auth.signUp({ email, password });
+      if (!result.error) {
+        // إنشاء ملف شخصي بعد التسجيل
+        const { data: { user } } = await window.supabase.auth.getUser();
+        if (user) {
+          await window.supabase.from('profiles').insert({ id: user.id, username: email.split('@')[0] });
+        }
+        alert('تم إنشاء الحساب! يمكنك الآن تسجيل الدخول.');
+        isLogin = true;
+        document.getElementById('authBtn').innerText = 'تسجيل الدخول';
+        return;
+      }
+    }
+    
+    if (result.error) {
+      alert(result.error.message);
+    } else {
+      currentUser = result.data.user;
+      await initUser();
+    }
+  };
+
+  // تسجيل الخروج
+  window.logout = async () => {
+    await window.supabase.auth.signOut();
+    location.reload();
+  };
+
+  // التهيئة بعد الدخول
+  async function initUser() {
+    const { data: { user } } = await window.supabase.auth.getUser();
+    if (!user) return;
+    currentUser = user;
+    
+    // جلب اسم المستخدم
+    const { data: profile } = await window.supabase.from('profiles').select('username').eq('id', user.id).single();
+    currentUserName = profile ? profile.username : 'مستخدم';
+
+    document.getElementById('authScreen').style.display = 'none';
+    document.getElementById('listView').style.display = 'flex';
+    await loadConversations();
+    setupRealtime();
   }
-  renderChats()
 
-  window.openChat = async (name) => {
-    currentChat = name
-    document.getElementById('chatName').innerText = name
-    document.getElementById('listView').style.display = 'none'
-    document.getElementById('chatView').style.display = 'flex'
-    document.getElementById('inputBar').style.display = 'flex'
-    await loadMessages(name)
-  }
+  // جلب المحادثات
+  async function loadConversations() {
+    const { data, error } = await window.supabase
+      .from('conversations')
+      .select('*, user1_profile:profiles!conversations_user1_fkey(username), user2_profile:profiles!conversations_user2_fkey(username)')
+      .or(`user1.eq.${currentUser.id},user2.eq.${currentUser.id}`);
 
-  window.closeChat = () => {
-    document.getElementById('chatView').style.display = 'none'
-    document.getElementById('inputBar').style.display = 'none'
-    document.getElementById('listView').style.display = 'block'
-    currentChat = null
-  }
-
-  async function loadMessages(name) {
-    const chatId = [myName, name].sort().join('_')
-    const { data, error } = await window.supabase.from('messages').select('*').eq('chat', chatId).order('created_at', { ascending: true })
+    const chatList = document.getElementById('chatList');
+    chatList.innerHTML = '';
+    
     if (data) {
-      document.getElementById('msgs').innerHTML = data.map(m=>`<div class="bubble ${m.sender===myName?'g':'p'}">${m.text}<span class="bt">${new Date(m.created_at).toLocaleTimeString()}</span></div>`).join('')
-      document.getElementById('msgs').scrollTop = 9999
+      data.forEach(conv => {
+        const otherUser = conv.user1 === currentUser.id ? conv.user2_profile.username : conv.user1_profile.username;
+        const div = document.createElement('div');
+        div.className = 'chat-card';
+        div.onclick = () => openChat(conv.id, otherUser);
+        div.innerHTML = `<div class="avatar">${otherUser[0]}</div><div style="flex:1"><div style="font-weight:900">${otherUser}</div><div style="font-size:12px;opacity:0.7">اضغط للمحادثة</div></div>`;
+        chatList.appendChild(div);
+      });
     }
   }
 
-  window.sendMsg = async () => {
-    const inp = document.getElementById('msgInput')
-    if (!inp.value.trim() || !currentChat) return
-    const text = inp.value
-    const chatId = [myName, currentChat].sort().join('_')
-    await window.supabase.from('messages').insert({ chat: chatId, sender: myName, text: text })
-    document.getElementById('msgs').innerHTML += `<div class="bubble g">${text}<span class="bt">الآن</span></div>`
-    inp.value = ''
-    document.getElementById('msgs').scrollTop = 9999
+  // بدء محادثة جديدة
+  window.startChat = async () => {
+    const username = document.getElementById('newChatUser').value.trim();
+    if (!username) return;
+
+    // البحث عن المستخدم
+    const { data: profile, error } = await window.supabase.from('profiles').select('id').eq('username', username).single();
+    if (error || !profile) return alert('المستخدم غير موجود');
+
+    // التحقق من وجود محادثة سابقة
+    const { data: existing } = await window.supabase.from('conversations').select('id').or(`and(user1.eq.${currentUser.id},user2.eq.${profile.id}),and(user1.eq.${profile.id},user2.eq.${currentUser.id})`).single();
+    
+    if (existing) {
+      openChat(existing.id, username);
+    } else {
+      const { data: newConv, error: createErr } = await window.supabase.from('conversations').insert({ user1: currentUser.id, user2: profile.id }).select().single();
+      if (createErr) alert('خطأ في إنشاء المحادثة');
+      else {
+        await loadConversations();
+        openChat(newConv.id, username);
+      }
+    }
+    document.getElementById('newChatUser').value = '';
+  };
+
+  // فتح دردشة
+  window.openChat = async (convId, username) => {
+    currentConversationId = convId;
+    document.getElementById('chatName').innerText = username;
+    document.getElementById('listView').style.display = 'none';
+    document.getElementById('chatView').style.display = 'flex';
+    await loadMessages(convId);
+  };
+
+  // إغلاق الدردشة
+  window.closeChat = () => {
+    document.getElementById('chatView').style.display = 'none';
+    document.getElementById('listView').style.display = 'flex';
+    currentConversationId = null;
+  };
+
+  // تحميل الرسائل
+  async function loadMessages(convId) {
+    const { data, error } = await window.supabase.from('messages').select('*').eq('conversation_id', convId).order('created_at', { ascending: true });
+    const msgsContainer = document.getElementById('msgs');
+    msgsContainer.innerHTML = '';
+    if (data) {
+      data.forEach(m => addBubble(m.text, m.sender_id === currentUser.id, m.created_at));
+      msgsContainer.scrollTop = msgsContainer.scrollHeight;
+    }
   }
 
-  window.filterChats = (q) => renderChats(chats.filter(c=>c.name.includes(q) || c.last.includes(q)))
+  // إضافة فقاعة
+  function addBubble(text, isMe, time) {
+    const div = document.createElement('div');
+    div.className = `bubble ${isMe ? 'me' : 'other'}`;
+    div.innerHTML = `${text}<div style="font-size:10px;opacity:0.5;margin-top:5px;text-align:left">${new Date(time).toLocaleTimeString()}</div>`;
+    document.getElementById('msgs').appendChild(div);
+    document.getElementById('msgs').scrollTop = document.getElementById('msgs').scrollHeight;
+  }
+
+  // إرسال رسالة
+  window.sendMsg = async () => {
+    const inp = document.getElementById('msgInput');
+    if (!inp.value.trim() || !currentConversationId) return;
+    const text = inp.value;
+    await window.supabase.from('messages').insert({ conversation_id: currentConversationId, sender_id: currentUser.id, text });
+    inp.value = '';
+  };
+
+  // الاستماع للرسائل الجديدة (Realtime)
+  function setupRealtime() {
+    window.supabase.channel('custom-all-channel')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, payload => {
+        const newMsg = payload.new;
+        if (newMsg.conversation_id === currentConversationId) {
+          addBubble(newMsg.text, newMsg.sender_id === currentUser.id, newMsg.created_at);
+        }
+      })
+      .subscribe();
+  }
+
+  // التهيئة عند بدء التطبيق
+  const { data: { session } } = await window.supabase.auth.getSession();
+  if (session) {
+    currentUser = session.user;
+    await initUser();
+  }
 </script>
 </body>
 </html>
