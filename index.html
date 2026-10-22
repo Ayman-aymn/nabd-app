@@ -186,6 +186,7 @@ window.logOut=async()=>{ await window.supabase.auth.signOut(); location.reload()
 window.toast=t=>alert(t);
 
 const {data:{session}}=await window.supabase.auth.getSession(); if(session){ currentUser=session.user; authScreen.style.display='none'; init(); }
+const savedChat = localStorage.getItem("lastChat"); if(savedChat) { const [id, name] = savedChat.split("|"); openChat(id, name); }
 </script>
 </body>
 </html>
