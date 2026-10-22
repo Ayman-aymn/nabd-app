@@ -158,7 +158,68 @@ window.toggleRec=async()=>{
 window.openProfile=()=>{ document.getElementById('listView').style.display='none'; document.getElementById('profileView').style.display='flex'; };
 window.closeProfile=()=>{ document.getElementById('profileView').style.display='none'; document.getElementById('listView').style.display='block'; };
 window.closeChat=()=>{ document.getElementById('chatView').style.display='none'; document.getElementById('listView').style.display='block'; };
-window.doFilter=q=>{ document.querySelectorAll('#chatList .chat').forEach(el=>el.style.display=el.innerText.includes(q)?'flex':'none'); };
+window.doFilter = async (q) => {
+  const list = document.getElementById('chatList');
+  if(!q || q.trim() === '') {
+    loadChats();
+    return;
+  }
+  q = q.trim();
+  // 1. ابحث في دردشاتك الحالية
+  document.querySelectorAll('#chatList .chat').forEach(el => {
+    el.style.display = el.innerText.includes(q) ? 'flex' : 'none';
+  });
+  
+  // 2. ابحث في كل المستخدمين في Supabase
+  const { data, error } = await window.supabase
+    .from('profiles')
+    .select('id, username, avatar_url')
+    .ilike('username', `%${q}%`)
+    .neq('id', currentUser.id)
+    .limit(10);
+  
+  if(data && data.length > 0) {
+    // اعرض نتائج البحث عن المستخدمين
+    const existingIds = await window.supabase.from('conversations').select('user1, user2').or(`user1.eq.${currentUser.id},user2.eq.${currentUser.id}`);
+    let html = `<div style="padding:8px;font-size:12px;color:#6b6b9a">نتائج البحث عن المستخدمين (${data.length})</div>`;
+    html += data.map(p => {
+      return `<div class="chat" onclick="startChatWith('${p.id}','${p.username}')" style="background:linear-gradient(180deg, #fff, #e8e8ff);border:1.5px dashed #a78bfa">
+        <div style="position:relative"><img src="${p.avatar_url||`https://i.pravatar.cc/100?u=${p.username}`}"><div style="position:absolute;bottom:2px;right:2px;width:16px;height:16px;background:#8b7eff;color:#fff;border-radius:50%;display:grid;place-items:center;font-size:10px">+</div></div>
+        <div class="cInfo"><div class="cName">${p.username} <span style="font-size:10px;color:#8b7eff">• جديد</span></div><div class="cLast">اضغط لبدء محادثة جديدة</div></div>
+        <div class="cMeta"><div style="color:#8b7eff">بحث</div></div>
+      </div>`;
+    }).join('');
+    list.innerHTML = html + list.innerHTML;
+  }
+};
+
+window.startChatWith = async (profileId, username) => {
+  const { data: existing } = await window.supabase.from('conversations').select('id').or(`and(user1.eq.${currentUser.id},user2.eq.${profileId}),and(user1.eq.${profileId},user2.eq.${currentUser.id})`).maybeSingle();
+  if(existing) {
+    openChat(existing.id, username);
+  } else {
+    const { data: newConv, error } = await window.supabase.from('conversations').insert({user1: currentUser.id, user2: profileId}).select().single();
+    if(error) { alert('خطأ: '+error.message); return; }
+    loadChats();
+    openChat(newConv.id, username);
+  }
+  document.getElementById('searchI').value = '';
+};
+
+
+window.startChatWith = async (profileId, username) => {
+  const { data: existing } = await window.supabase.from('conversations').select('id').or(`and(user1.eq.${currentUser.id},user2.eq.${profileId}),and(user1.eq.${profileId},user2.eq.${currentUser.id})`).maybeSingle();
+  if(existing) {
+    openChat(existing.id, username);
+  } else {
+    const { data: newConv, error } = await window.supabase.from('conversations').insert({user1: currentUser.id, user2: profileId}).select().single();
+    if(error) { alert('خطأ: '+error.message); return; }
+    loadChats();
+    openChat(newConv.id, username);
+  }
+  document.getElementById('searchI').value = '';
+};
+
 document.getElementById('avatarInp').addEventListener('change', e=>{ const r=new FileReader(); r.onload=ev=>document.getElementById('myAvatar').src=ev.target.result; r.readAsDataURL(e.target.files[0]); });
 window.saveProfile=async()=>{ await window.supabase.from('profiles').update({username:document.getElementById('myName').value,bio:document.getElementById('myBio').value,avatar_url:document.getElementById('myAvatar').src}).eq('id',currentUser.id); alert('تم الحفظ ✓'); closeProfile(); loadChats(); };
 window.addMyStatus=()=>{ const inp=document.createElement('input'); inp.type='file'; inp.accept='image/*'; inp.onchange=e=>{ const r=new FileReader(); r.onload=ev=>{ const img=new Image(); img.onload=async()=>{ const c=document.createElement('canvas'); c.width=720; c.height=img.height/img.width*720; c.getContext('2d').drawImage(img,0,0,c.width,c.height); const comp=c.toDataURL('image/jpeg',0.6); await window.supabase.from('statuses').insert({username:currentUserName,content:comp}); loadStories(); }; img.src=ev.target.result; }; r.readAsDataURL(e.target.files[0]); }; inp.click(); };
