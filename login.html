@@ -92,11 +92,11 @@ body{background:#020617 url('https://images.unsplash.com/photo-1534796636912-3b9
     } else {
       result = await window.supabase.auth.signUp({ email, password });
       if (!result.error) {
-        const { data: { user } } = await window.supabase.auth.getUser();
+        const { data: { user } } = await window.supabase.auth.getUser(); if(user){ await window.supabase.from('profiles').insert({ id: user.id, username: email.split('@')[0] }); }
         if (user) {
           await window.supabase.from('profiles').insert({ id: user.id, username: email.split('@')[0] });
         }
-        alert('تم إنشاء الحساب! يمكنك الآن تسجيل الدخول.');
+        alert('تم إنشاء الحساب بنجاح! جاري تسجيل الدخول...');
         isLogin = true;
         document.getElementById('authBtn').innerText = 'تسجيل الدخول';
         return;
@@ -109,7 +109,7 @@ body{background:#020617 url('https://images.unsplash.com/photo-1534796636912-3b9
   window.logout = async () => { await window.supabase.auth.signOut(); location.reload(); };
 
   async function initUser() {
-    const { data: { user } } = await window.supabase.auth.getUser();
+    const { data: { user } } = await window.supabase.auth.getUser(); if(user){ await window.supabase.from('profiles').insert({ id: user.id, username: email.split('@')[0] }); }
     if (!user) return;
     currentUser = user;
     const { data: profile } = await window.supabase.from('profiles').select('username').eq('id', user.id).single();
