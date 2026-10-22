@@ -11,15 +11,19 @@
   window.supabase = supabase;
 </script>
 <style>
-/* التصميم الأصلي الخاص بك بالكامل كما هو */
+/* التصميم الذي أرسلته أنت بالضبط */
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:#eef2ff;min-height:100vh;color:#1e293b;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px at 10% 0%, rgba(91,141,239,.18), transparent),radial-gradient(600px at 90% 100%, rgba(139,92,246,.15), transparent);pointer-events:none}
 .app{max-width:430px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;padding-bottom:90px}
+
+/* هيدر */
 .header{margin:14px;padding:12px 16px;background:rgba(255,255,255,.85);border:1px solid rgba(91,141,239,.15);border-radius:20px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 8px 24px rgba(91,141,239,.12), inset 0 1px 0 rgba(255,255,255,.9)}
 .logo{font-size:28px;font-weight:900;color:#3b82f6;display:flex;align-items:center;gap:8px}
 .logo b{color:#8b5cf6}
 .hBtn{width:36px;height:36px;border-radius:12px;background:#fff;border:1px solid rgba(91,141,239,.15);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+
+/* جزيرة البحث الفاتحة */
 .island{margin:0 14px;width:calc(100% - 28px);padding:14px 18px;background:rgba(255,255,255,.9);border:1px solid rgba(91,141,239,.2);border-radius:20px;display:flex;align-items:center;gap:12px;cursor:pointer;box-shadow:0 8px 24px rgba(91,141,239,.12), inset 0 1px 0 #fff;transition:.35s cubic-bezier(.4,0,.2,1)}
 .island.expanded{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:100vh;z-index:100;border-radius:0;padding:20px;background:rgba(238,242,255,.96);backdrop-filter:blur(16px);flex-direction:column;align-items:stretch}
 .dot{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#5b8def,#8b5cf6);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;box-shadow:0 4px 12px rgba(91,141,239,.3)}
@@ -30,6 +34,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
 .sugGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .sug{padding:12px;background:#fff;border:1px solid rgba(91,141,239,.12);border-radius:14px;display:flex;gap:10px;align-items:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.04)}
 .sug img{width:36px;height:36px;border-radius:50%}
+
+/* قصص - فقاعات فاتحة */
 .stories{display:flex;gap:14px;overflow-x:auto;padding:8px 2px 12px;scrollbar-width:none}
 .stories::-webkit-scrollbar{display:none}
 .story{flex-shrink:0;text-align:center;cursor:pointer}
@@ -38,6 +44,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
 .bubbleWrap img{width:54px;height:54px;border-radius:50%;object-fit:cover;border:2px solid #fff}
 .bubbleWrap.add{background:rgba(255,255,255,.6);border:2px dashed rgba(139,92,246,.3)}
 .stName{font-size:11px;margin-top:6px;color:#475569;font-weight:600}
+
+/* محادثات - كروت فاتحة طافية */
 .block{margin:16px 14px 0}
 .bTitle{font-weight:800;font-size:16px;margin-bottom:10px;color:#1e293b;display:flex;justify-content:space-between}
 .chat{padding:12px;background:#fff;border:1px solid rgba(91,141,239,.1);border-radius:18px;display:flex;gap:12px;align-items:center;margin-bottom:10px;cursor:pointer;box-shadow:0 4px 16px rgba(91,141,239,.08), inset 0 1px 0 #fff;transition:.2s}
@@ -49,10 +57,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
 .cLast{font-size:12.5px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
 .cMeta{font-size:11px;color:#94a3b8;text-align:left;flex-shrink:0}
 .badge{background:linear-gradient(135deg,#5b8def,#8b5cf6);color:#fff;min-width:22px;height:22px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:4px;box-shadow:0 2px 8px rgba(91,141,239,.3)}
+
 .bottom{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);width:calc(100% - 28px);max-width:400px;background:rgba(255,255,255,.88);backdrop-filter:blur(16px);border:1px solid rgba(91,141,239,.15);border-radius:22px;display:grid;grid-template-columns:repeat(4,1fr);padding:8px;box-shadow:0 12px 32px rgba(91,141,239,.15);z-index:20}
 .navItem{text-align:center;font-size:10px;color:#94a3b8;cursor:pointer;font-weight:600}
 .navItem.active{color:#5b8def}
 .navItem i{font-size:20px;display:block;margin-bottom:2px;font-style:normal}
+
+/* محادثة */
 #chatView{position:fixed;inset:0;max-width:430px;margin:0 auto;background:#eef2ff;display:none;flex-direction:column;z-index:90}
 .bubbles{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
 .bubble{max-width:78%;padding:12px 14px;border-radius:18px;font-size:14px;line-height:1.5;box-shadow:0 2px 12px rgba(0,0,0,.06)}
@@ -66,6 +77,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
 <body>
 <div class="app" id="listView">
   <div class="header"><div class="logo">نبض <b>♡</b></div><div style="display:flex;gap:8px"><div class="hBtn" onclick="openModal()">💬+</div><div class="hBtn">⋯</div></div></div>
+
   <div class="island" id="island" onclick="if(!this.classList.contains('expanded')) expand()">
     <div class="dot">⌕</div>
     <input id="searchI" placeholder="ابحث في المحادثات..." oninput="doFilter(this.value)" onfocus="expand()">
@@ -78,8 +90,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
       <div style="margin-top:20px;padding:14px;background:#fff;border-radius:14px;text-align:center;border:1px solid rgba(91,141,239,.1);cursor:pointer" onclick="collapse()">إغلاق ←</div>
     </div>
   </div>
+
   <div class="block"><div class="bTitle"><span>القصص</span><span style="color:#5b8def;font-size:12px">عرض الكل</span></div><div class="stories" id="storiesMain"></div></div>
   <div class="block"><div class="bTitle"><span>الدردشات</span><span style="color:#8b5cf6;font-size:12px" id="count"></span></div><div id="chatList"></div></div>
+
   <div class="bottom">
     <div class="navItem active"><i>💬</i>الدردشات</div>
     <div class="navItem" onclick="toast('المكالمات قريباً')"><i>📞</i>مكالمات</div>
@@ -87,11 +101,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
     <div class="navItem" onclick="toast('الإعدادات')"><i>⚙️</i>إعدادات</div>
   </div>
 </div>
+
 <div id="chatView">
   <div class="header"><div class="hBtn" onclick="closeChat()">‹</div><div style="flex:1;display:flex;gap:10px;align-items:center"><img id="cvImg" class="cAv" style="width:38px;height:38px"><div><div id="cvName" style="font-weight:800;font-size:14px"></div><div style="font-size:11px;color:#22c55e">متصل الآن</div></div></div><div class="hBtn">📞</div><div class="hBtn">🎥</div></div>
   <div class="bubbles" id="bubbles"></div>
   <div class="inputBar"><div class="hBtn">＋</div><input id="msgInp" placeholder="اكتب رسالة..." onkeydown="if(event.key==='Enter')send()"><button class="sendBtn" onclick="send()">➤</button></div>
 </div>
+
 <div id="statusView" style="display:none;position:fixed;inset:0;background:#eef2ff;padding:20px;flex-direction:column;z-index:95">
   <div style="display:flex;justify-content:space-between;margin-bottom:20px"><h2>الحالات</h2><button onclick="closeStatus()">✕</button></div>
   <button onclick="addMyStatus()" style="padding:10px;background:#5b8def;color:#fff;border:none;border-radius:10px;margin-bottom:15px">+ إضافة حالة</button>
@@ -99,13 +115,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
 </div>
 
 <script type="module">
-  let users = [];
-  let currentUser = null;
-  let currentChatId = null;
-  let currentUserName = null;
+  let currentUser = null, currentChatId = null, currentChatName = null, currentUserName = null;
   let isLogin = true;
 
-  // إضافة شاشة الدخول
+  // شاشة الدخول
   const authScreen = document.createElement('div');
   authScreen.id = 'authScreen';
   authScreen.style.cssText = 'position:fixed;inset:0;background:#eef2ff;z-index:100;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;padding:20px';
@@ -126,10 +139,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
       }
     }
     if (res.error) alert(res.error.message);
-    else { currentUser = res.data.user; authScreen.style.display='none'; document.getElementById('listView').style.display='block'; loadChats(); }
+    else { currentUser = res.data.user; currentUserName = u; authScreen.style.display='none'; document.getElementById('listView').style.display='block'; loadChats(); }
   };
 
-  // دالة تحميل المحادثات من قاعدة البيانات
+  // تحميل المحادثات
   async function loadChats() {
     const { data } = await window.supabase.from('conversations').select('*, u1:profiles!conversations_user1_fkey(username), u2:profiles!conversations_user2_fkey(username)').or(`user1.eq.${currentUser.id},user2.eq.${currentUser.id}`);
     const list = document.getElementById('chatList');
@@ -139,6 +152,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
     }).join('') : '';
   }
 
+  // بدء محادثة جديدة
   window.openModal = async () => {
     const name = prompt('اسم المستخدم:');
     if(!name) return;
@@ -153,8 +167,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
     }
   };
 
+  // فتح محادثة
   window.openChat = async (id, name) => {
-    currentChatId = id;
+    currentChatId = id; currentChatName = name;
     document.getElementById('cvName').innerText = name;
     document.getElementById('listView').style.display='none';
     document.getElementById('chatView').style.display='flex';
@@ -162,13 +177,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
     document.getElementById('bubbles').innerHTML = data ? data.map(m => `<div class="bubble ${m.sender_id === currentUser.id ? 'me' : 'other'}">${m.text}</div>`).join('') : '';
   };
 
+  // إرسال رسالة
   window.send = async () => {
     const inp = document.getElementById('msgInp');
     if(!inp.value.trim() || !currentChatId) return;
     const text = inp.value;
     await window.supabase.from('messages').insert({conversation_id: currentChatId, sender_id: currentUser.id, text});
     inp.value = '';
-    openChat(currentChatId, document.getElementById('cvName').innerText);
+    openChat(currentChatId, currentChatName);
   };
 
   window.closeChat = () => {
