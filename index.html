@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>نبض - Nabd</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&display=swap" rel="stylesheet">
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+  const supabase = createClient('https://lmgshabrtmvbnpdhkkst.supabase.co', 'sb_publishable_XCTUMu79wWd2wQFmM51vVg_nec2Glwb')
+  window.supabase = supabase;
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif}
+body{background:#050a18;min-height:100vh;color:#fff}
+.app{max-width:410px;margin:0 auto;padding:10px;min-height:100vh;display:flex;flex-direction:column}
+.header{background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.12);border-radius:22px;padding:12px 14px;display:flex;align-items:center;gap:12px}
+.heart{width:54px;height:48px;filter:drop-shadow(0 0 6px gold)}
+.logo{font-size:40px;font-weight:900;color:#00ff99}
+.search{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:12px;color:#fff;outline:none;margin-bottom:14px}
+.chat{display:flex;align-items:center;gap:12px;padding:14px;border-radius:20px;margin-bottom:10px;background:rgba(255,255,255,0.07);border:2px solid transparent;cursor:pointer}
+.chat.green{border-color:#00ff99}.chat.purple{border-color:#b86bff}
+.avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;flex-shrink:0}
+.green .avatar{background:radial-gradient(circle, #0a2a1f, #000);border:1.5px solid #00ff99;color:#00ff99}
+.purple .avatar{background:radial-gradient(circle, #1f0a2a, #000);border:1.5px solid #b86bff;color:#b86bff}
+.info{flex:1;min-width:0}.name{font-size:17px;font-weight:800}.last{font-size:13px;opacity:0.7}
+#chatView{display:none;flex-direction:column;flex:1}
+.bubble{max-width:80%;padding:12px;border-radius:18px;margin-bottom:10px;font-size:14px;line-height:1.5;position:relative;word-break:break-word}
+.bubble.p{align-self:flex-start;background:rgba(184,107,255,0.12);border:2px solid #b86bff}
+.bubble.g{align-self:flex-end;background:rgba(0,255,153,0.10);border:2px solid #00ff99}
+.bt{font-size:11px;opacity:0.6;margin-top:6px;display:block;text-align:left}
+.inputBar{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);width:calc(100% - 20px);max-width:410px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:26px;padding:8px 10px;display:flex;align-items:center;gap:8px;z-index:10}
+.inputBar input{flex:1;background:rgba(255,255,255,0.08);border:none;border-radius:18px;padding:10px 12px;color:#fff;outline:none}
+.plus{font-size:26px;color:#b86bff;cursor:pointer}
+.send{width:40px;height:40px;border-radius:50%;background:rgba(0,255,153,0.12);border:1.8px solid #00ff99;color:#00ff99;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px}
+</style>
+</head>
+<body>
+<div class="app">
+  <div id="listView">
+    <div class="header"><svg class="heart" viewBox="0 0 100 80"><path d="M50 65 C15 45, 2 28, 26 18 C34 13, 44 16, 50 24 C56 16, 66 13, 74 18 C98 28, 85 45, 50 65 Z" fill="none" stroke="gold" stroke-width="4"/><path d="M10 38 L32 38 L38 26 L44 50 L50 34 L58 42 L72 38 L90 38" fill="none" stroke="gold" stroke-width="3" stroke-linecap="round"/></svg><div class="logo">نبض</div></div>
+    <input class="search" id="searchInput" placeholder="🔍 بحث..." oninput="filterChats(this.value)">
+    <div style="color:#b86bff;font-weight:800;margin-bottom:8px">الدردشات</div>
+    <div id="chatList"></div>
+  </div>
+  <div id="chatView">
+    <div class="header"><span style="font-size:24px;color:#b86bff;cursor:pointer" onclick="closeChat()">›</span><svg class="heart" style="width:40px;height:36px" viewBox="0 0 100 80"><path d="M50 65 C15 45, 2 28, 26 18 C34 13, 44 16, 50 24 C56 16, 66 13, 74 18 C98 28, 85 45, 50 65 Z" fill="none" stroke="gold" stroke-width="4"/></svg><div style="flex:1"><div id="chatName" style="font-weight:800"></div></div></div>
+    <div style="flex:1;padding:14px 0;display:flex;flex-direction:column;gap:2px;overflow-y:auto" id="msgs"></div>
+  </div>
+</div>
+<div class="inputBar" id="inputBar" style="display:none">
+  <span class="plus" onclick="sendImage()">+</span>
+  <input id="msgInput" placeholder="اكتب رسالة..." onkeydown="if(event.key==='Enter')sendMsg()">
+  <div class="send" onclick="sendMsg()">➤</div>
+</div>
+<script type="module">
+  const chats = [
+    {name:'أحمد خالد', last:'تمام، سأرسل الملف', color:'green'},
+    {name:'سارة محمود', last:'شكراً لردك', color:'purple'},
+    {name:'فريق المشروع', last:'تم تحديث المستندات', color:'green'}
+  ]
+  let currentChat = null
+  let myName = "أنا"
+
+  function renderChats(list=chats){
+    document.getElementById('chatList').innerHTML = list.map(c=>`
+      <div class="chat ${c.color}" onclick="openChat('${c.name}')">
+        <div class="avatar">${c.name[0]}</div>
+        <div class="info"><div class="name">${c.name}</div><div class="last">${c.last}</div></div>
+      </div>`).join('')
+  }
+  renderChats()
+
+  window.openChat = async (name) => {
+    currentChat = name
+    document.getElementById('chatName').innerText = name
+    document.getElementById('listView').style.display = 'none'
+    document.getElementById('chatView').style.display = 'flex'
+    document.getElementById('inputBar').style.display = 'flex'
+    await loadMessages(name)
+  }
+
+  window.closeChat = () => {
+    document.getElementById('chatView').style.display = 'none'
+    document.getElementById('inputBar').style.display = 'none'
+    document.getElementById('listView').style.display = 'block'
+    currentChat = null
+  }
+
+  async function loadMessages(name) {
+    const chatId = [myName, name].sort().join('_')
+    const { data, error } = await window.supabase.from('messages').select('*').eq('chat', chatId).order('created_at', { ascending: true })
+    if (data) {
+      document.getElementById('msgs').innerHTML = data.map(m=>`<div class="bubble ${m.sender===myName?'g':'p'}">${m.text}<span class="bt">${new Date(m.created_at).toLocaleTimeString()}</span></div>`).join('')
+      document.getElementById('msgs').scrollTop = 9999
+    }
+  }
+
+  window.sendMsg = async () => {
+    const inp = document.getElementById('msgInput')
+    if (!inp.value.trim() || !currentChat) return
+    const text = inp.value
+    const chatId = [myName, currentChat].sort().join('_')
+    await window.supabase.from('messages').insert({ chat: chatId, sender: myName, text: text })
+    document.getElementById('msgs').innerHTML += `<div class="bubble g">${text}<span class="bt">الآن</span></div>`
+    inp.value = ''
+    document.getElementById('msgs').scrollTop = 9999
+  }
+
+  window.filterChats = (q) => renderChats(chats.filter(c=>c.name.includes(q) || c.last.includes(q)))
+</script>
+</body>
+</html>
