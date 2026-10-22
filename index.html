@@ -20,7 +20,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .logo{font-size:30px;font-weight:900;color:#5b5bd6;letter-spacing:-0.5px;display:flex;align-items:center;gap:4px}
 .logo i{font-style:normal;font-size:20px;opacity:0.6;font-weight:400}
 
-/* جزيرة البحث - نفس الصورة تماما */
+/* جزيرة البحث */
 .island{width:100%;height:56px;background:linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(235,240,255,0.9) 100%);border:1.5px solid rgba(255,255,255,0.9);border-radius:28px;display:flex;align-items:center;gap:12px;padding:0 20px;box-shadow:0 12px 24px rgba(120,130,220,0.15), 0 4px 8px rgba(120,130,220,0.1), inset 0 1px 0 #fff, inset 0 -1px 0 rgba(120,130,220,0.1);cursor:text}
 .island .icon{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg, #c7b8ff, #8b7eff);display:grid;place-items:center;color:#fff;font-size:20px;box-shadow:0 4px 12px rgba(139,126,255,0.3)}
 .island input{flex:1;border:none;background:transparent;outline:none;font-size:16px;font-weight:700;color:#3a3a6e}
@@ -29,7 +29,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 /* العناوين */
 .section{font-size:18px;font-weight:800;color:#2a2a5a;margin:24px 6px 16px}
 
-/* القصص - فقاعات زجاجية منفوخة 3D */
+/* القصص */
 .stories{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;padding:6px 4px 10px}
 .stories::-webkit-scrollbar{display:none}
 .story{flex:0 0 84px;text-align:center;cursor:pointer}
@@ -39,7 +39,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .bubble3d.group{background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(210,210,255,0.6))}
 .sName{font-size:12px;font-weight:700;margin-top:8px;color:#3a3a6e}
 
-/* الدردشات - كبسولات زجاجية */
+/* الدردشات */
 .chat{width:100%;min-height:72px;background:linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(238,242,255,0.95) 100%);border:1.5px solid rgba(255,255,255,0.85);border-radius:20px;display:flex;align-items:center;gap:12px;padding:10px 14px;margin-bottom:12px;box-shadow:0 8px 20px rgba(120,130,220,0.12), 0 2px 6px rgba(120,130,220,0.08), inset 0 1px 0 #fff, inset 0 -1px 0 rgba(120,130,220,0.05);cursor:pointer;transition:0.2s}
 .chat:active{transform:scale(0.98)}
 .chat img{width:52px;height:52px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
@@ -48,7 +48,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .badge{background:linear-gradient(135deg, #d8cfff, #c9b8ff);color:#6b5bcf;min-width:24px;height:24px;border-radius:8px;display:grid;place-items:center;font-size:12px;font-weight:800;padding:0 6px;border:1px solid rgba(255,255,255,0.8)}
 .online{width:10px;height:10px;background:#22c55e;border-radius:50%;border:2px solid #fff;position:absolute;bottom:2px;right:2px}
 
-/* الشريط السفلي - نفس الصورة */
+/* الشريط السفلي */
 .bottom{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);width:calc(100% - 36px);max-width:380px;height:56px;background:linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(235,240,255,0.95) 100%);border:1.5px solid rgba(255,255,255,0.9);border-radius:28px;display:flex;justify-content:space-around;align-items:center;box-shadow:0 12px 32px rgba(120,130,220,0.2), 0 4px 12px rgba(120,130,220,0.15), inset 0 1px 0 #fff;z-index:20;padding:0 10px}
 .bottom button{width:44px;height:44px;border-radius:14px;border:none;background:transparent;display:grid;place-items:center;font-size:22px;cursor:pointer;color:#9aa0d0}
 .bottom button.active{background:linear-gradient(180deg, #fff, #eef2ff);box-shadow:0 4px 12px rgba(120,130,220,0.15), inset 0 1px 0 #fff;color:#6b6ee6;border:1px solid rgba(255,255,255,0.8)}
@@ -63,8 +63,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 </head>
 <body>
 <div class="app" id="listView">
-  <div class="header"><div class="logo">نبض <i>♡</i></div><div style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.8);display:grid;place-items:center;border:1px solid #fff">↻</div></div>
-  <div class="island" onclick="document.getElementById('searchI').focus()"><div class="icon">⌕</div><input id="searchI" placeholder="ابحث في المحادثات" oninput="doFilter(this.value)"></div>
+  <div class="header"><div class="logo">نبض <i>♡</i></div><div style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.8);display:grid;place-items:center;border:1px solid #fff" onclick="openProfile()">👤</div></div>
+  <div class="island"><div class="icon">⌕</div><input id="searchI" placeholder="ابحث عن مستخدم أو محادثة..." oninput="doSearch(this.value)"></div>
   <div class="section">القصص</div>
   <div class="stories" id="storiesMain"></div>
   <div class="section">الدردشات</div>
@@ -85,10 +85,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 
 <div id="profileView">
   <div style="padding:10px"><div class="island" style="height:56px"><div style="font-size:20px;cursor:pointer" onclick="closeProfile()">‹</div><b style="flex:1">ملفي الشخصي</b><div style="font-size:20px;cursor:pointer" onclick="saveProfile()">✓</div></div></div>
-  <div style="padding:20px;text-align:center"><div style="position:relative;width:110px;height:110px;margin:0 auto"><img id="myAvatar" style="width:110px;height:110px;border-radius:50%;border:4px solid #fff;object-fit:cover;box-shadow:0 8px 24px rgba(120,130,220,0.2)"><div onclick="document.getElementById('avatarInp').click()" style="position:absolute;bottom:0;right:0;background:linear-gradient(135deg,#8b7eff,#a78bfa);color:#fff;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;cursor:pointer;border:2px solid #fff">📷</div></div><input type="file" id="avatarInp" accept="image/*" hidden><div style="margin-top:20px;text-align:right"><label style="font-size:12px;color:#6b6b9a">اسم المستخدم</label><input id="myName" class="island" style="margin-top:6px"><label style="font-size:12px;color:#6b6b9a;margin-top:12px;display:block">نبذة</label><input id="myBio" class="island" style="margin-top:6px" placeholder="اكتب نبذة عنك..."><div class="island" style="margin-top:16px;height:auto;padding:14px;flex-direction:column;align-items:flex-start;gap:4px"><div style="font-size:12px">📧 <span id="myEmail"></span></div><div style="font-size:12px">💬 عدد المحادثات: <span id="myChatsCount">0</span></div></div><button onclick="logOut()" style="margin-top:20px;width:100%;height:48px;background:#fee2e2;color:#ef4444;border:1.5px solid #fecaca;border-radius:16px;font-weight:800">تسجيل خروج</button></div></div>
+  <div style="padding:20px;text-align:center"><div style="position:relative;width:110px;height:110px;margin:0 auto"><img id="myAvatar" style="width:110px;height:110px;border-radius:50%;border:4px solid #fff;object-fit:cover;box-shadow:0 8px 24px rgba(120,130,220,0.2)"><div onclick="document.getElementById('avatarInp').click()" style="position:absolute;bottom:0;right:0;background:linear-gradient(135deg,#8b7eff,#a78bfa);color:#fff;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;cursor:pointer;border:2px solid #fff">📷</div></div><input type="file" id="avatarInp" accept="image/*" hidden><div style="margin-top:20px;text-align:right"><label style="font-size:12px;color:#6b6b9a">اسم المستخدم</label><input id="myName" class="island" style="margin-top:6px"><label style="font-size:12px;color:#6b6b9a;margin-top:12px;display:block">نبذة</label><input id="myBio" class="island" style="margin-top:6px" placeholder="اكتب نبذة عنك..."><button onclick="logOut()" style="margin-top:20px;width:100%;height:48px;background:#fee2e2;color:#ef4444;border:1.5px solid #fecaca;border-radius:16px;font-weight:800">تسجيل خروج</button></div></div>
 </div>
 
-<div id="storyViewer" style="background:#000"><div style="position:absolute;top:0;left:0;right:0;height:4px;display:flex;gap:4px;padding:8px;z-index:2" id="storyProgress"></div><div style="padding:14px;display:flex;justify-content:space-between;color:#fff;z-index:2"><div style="display:flex;gap:10px;align-items:center"><img id="stVImg" style="width:36px;height:36px;border-radius:50%"><b id="stVName"></b></div><div onclick="closeStoryViewer()" style="font-size:28px;cursor:pointer">✕</div></div><img id="stVContent" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;margin:auto"></div>
+<div id="storyViewer" style="background:#000"><div style="padding:14px;display:flex;justify-content:space-between;color:#fff;z-index:2"><b id="stVName"></b><div onclick="closeStoryViewer()" style="font-size:28px;cursor:pointer">✕</div></div><img id="stVContent" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;margin:auto"></div>
 
 <script type="module">
 let currentUser=null,currentChatId=null,currentUserName=null,mediaRecorder=null,audioChunks=[],isRec=false;
@@ -106,14 +106,15 @@ window.handleAuth=async()=>{
 
 async function init(){
  const {data:p}=await window.supabase.from('profiles').select('*').eq('id',currentUser.id).single(); currentUserName=p?.username||'مستخدم';
- document.getElementById('myName').value=p?.username||''; document.getElementById('myBio').value=p?.bio||''; document.getElementById('myEmail').innerText=currentUser.email;
+ document.getElementById('myName').value=p?.username||''; document.getElementById('myBio').value=p?.bio||'';
  document.getElementById('myAvatar').src=p?.avatar_url||`https://i.pravatar.cc/200?u=${currentUser.id}`;
  loadChats(); loadStories();
 }
 
 async function loadStories(){
  const {data}=await window.supabase.from('statuses').select('*').order('created_at',{ascending:false}).limit(15);
- let stories=[{username:'قصتك',content:'',mine:true}, {username:'ليلى',content:'https://i.pravatar.cc/200?img=26'}, {username:'خالد',content:'https://i.pravatar.cc/200?img=15'}, {username:'نورة',content:'https://i.pravatar.cc/200?img=32'}, {username:'فريق العمل',content:'',group:true}, ...(data||[])];
+ let stories=[{username:'قصتك',content:'',mine:true}, ...(data||[])];
+ if(stories.length===1) stories.push({username:'ليلى',content:'https://i.pravatar.cc/200?img=26'},{username:'خالد',content:'https://i.pravatar.cc/200?img=15'},{username:'نورة',content:'https://i.pravatar.cc/200?img=32'});
  document.getElementById('storiesMain').innerHTML=stories.map((s,i)=>`<div class="story" onclick="${s.mine?'addMyStatus()':`openStoryViewer(${i})`}"><div class="bubble3d ${s.group?'group':''}">${s.content?`<img src="${s.content}">`:`<div style="font-size:28px">👥</div>`}<div class="plus">+</div></div><div class="sName">${s.username}</div></div>`).join('');
  window._stories=stories;
 }
@@ -121,10 +122,29 @@ async function loadStories(){
 async function loadChats(){
  const {data}=await window.supabase.from('conversations').select('*, u1:profiles!conversations_user1_fkey(username,avatar_url), u2:profiles!conversations_user2_fkey(username,avatar_url)').or(`user1.eq.${currentUser.id},user2.eq.${currentUser.id}`).order('created_at',{ascending:false});
  const list=document.getElementById('chatList');
- if(!data||data.length===0){ list.innerHTML='<div class="island" style="justify-content:center">لا توجد محادثات بعد، اضغط +</div>'; return; }
- document.getElementById('myChatsCount').innerText=data.length;
- list.innerHTML=data.map(c=>{ const other=c.user1===currentUser.id?c.u2:c.u1; if(!other) return ''; return `<div class="chat" onclick="openChat('${c.id}','${other.username}')"><div style="position:relative"><img src="${other.avatar_url||`https://i.pravatar.cc/100?u=${other.username}`}"><div class="online"></div></div><div class="cInfo"><div class="cName">${other.username}</div><div class="cLast">${c.last_message||'✓ تمام، أرسلت لك الملف الآن'}</div></div><div class="cMeta"><div>الآن</div><div class="badge">${Math.floor(Math.random()*5)+1}</div></div></div>`; }).join('');
+ if(!data||data.length===0){ list.innerHTML='<div class="island" style="justify-content:center">لا توجد محادثات بعد، ابحث عن مستخدم بالأعلى</div>'; return; }
+ list.innerHTML=data.map(c=>{ const other=c.user1===currentUser.id?c.u2:c.u1; if(!other) return ''; return `<div class="chat" onclick="openChat('${c.id}','${other.username}')"><div style="position:relative"><img src="${other.avatar_url||`https://i.pravatar.cc/100?u=${other.username}`}"><div class="online"></div></div><div class="cInfo"><div class="cName">${other.username}</div><div class="cLast">${c.last_message||'اضغط للمحادثة'}</div></div><div class="cMeta"><div>الآن</div></div></div>`; }).join('');
 }
+
+window.doSearch=async(q)=>{
+ if(!q.trim()){ document.getElementById('chatList').innerHTML=''; loadChats(); return; }
+ const {data}=await window.supabase.from('profiles').select('id,username').ilike('username',`%${q}%`).limit(5);
+ const list=document.getElementById('chatList');
+ if(data && data.length>0){
+   list.innerHTML=data.map(u=>`<div class="chat" onclick="startChatWithUser('${u.id}','${u.username}')"><img src="https://i.pravatar.cc/100?u=${u.username}"><div class="cInfo"><div class="cName">${u.username}</div><div class="cLast">اضغط لبدء المحادثة</div></div></div>`).join('');
+ } else {
+   list.innerHTML='<div class="island" style="justify-content:center">لا يوجد مستخدم بهذا الاسم</div>';
+ }
+};
+
+window.startChatWithUser=async(userId,username)=>{
+ const {data:existing}=await window.supabase.from('conversations').select('id').or(`and(user1.eq.${currentUser.id},user2.eq.${userId}),and(user1.eq.${userId},user2.eq.${currentUser.id})`).maybeSingle();
+ if(existing) openChat(existing.id,username);
+ else {
+   const {data:newConv}=await window.supabase.from('conversations').insert({user1:currentUser.id,user2:userId}).select().single();
+   loadChats(); openChat(newConv.id,username);
+ }
+};
 
 window.openChat=async(id,name)=>{
  currentChatId=id; document.getElementById('cvName').innerText=name; document.getElementById('cvImg').src=`https://i.pravatar.cc/100?u=${name}`;
@@ -158,76 +178,13 @@ window.toggleRec=async()=>{
 window.openProfile=()=>{ document.getElementById('listView').style.display='none'; document.getElementById('profileView').style.display='flex'; };
 window.closeProfile=()=>{ document.getElementById('profileView').style.display='none'; document.getElementById('listView').style.display='block'; };
 window.closeChat=()=>{ document.getElementById('chatView').style.display='none'; document.getElementById('listView').style.display='block'; };
-window.doFilter = async (q) => {
-  const list = document.getElementById('chatList');
-  if(!q || q.trim() === '') {
-    loadChats();
-    return;
-  }
-  q = q.trim();
-  // 1. ابحث في دردشاتك الحالية
-  document.querySelectorAll('#chatList .chat').forEach(el => {
-    el.style.display = el.innerText.includes(q) ? 'flex' : 'none';
-  });
-  
-  // 2. ابحث في كل المستخدمين في Supabase
-  const { data, error } = await window.supabase
-    .from('profiles')
-    .select('id, username, avatar_url')
-    .ilike('username', `%${q}%`)
-    .neq('id', currentUser.id)
-    .limit(10);
-  
-  if(data && data.length > 0) {
-    // اعرض نتائج البحث عن المستخدمين
-    const existingIds = await window.supabase.from('conversations').select('user1, user2').or(`user1.eq.${currentUser.id},user2.eq.${currentUser.id}`);
-    let html = `<div style="padding:8px;font-size:12px;color:#6b6b9a">نتائج البحث عن المستخدمين (${data.length})</div>`;
-    html += data.map(p => {
-      return `<div class="chat" onclick="startChatWith('${p.id}','${p.username}')" style="background:linear-gradient(180deg, #fff, #e8e8ff);border:1.5px dashed #a78bfa">
-        <div style="position:relative"><img src="${p.avatar_url||`https://i.pravatar.cc/100?u=${p.username}`}"><div style="position:absolute;bottom:2px;right:2px;width:16px;height:16px;background:#8b7eff;color:#fff;border-radius:50%;display:grid;place-items:center;font-size:10px">+</div></div>
-        <div class="cInfo"><div class="cName">${p.username} <span style="font-size:10px;color:#8b7eff">• جديد</span></div><div class="cLast">اضغط لبدء محادثة جديدة</div></div>
-        <div class="cMeta"><div style="color:#8b7eff">بحث</div></div>
-      </div>`;
-    }).join('');
-    list.innerHTML = html + list.innerHTML;
-  }
-};
-
-window.startChatWith = async (profileId, username) => {
-  const { data: existing } = await window.supabase.from('conversations').select('id').or(`and(user1.eq.${currentUser.id},user2.eq.${profileId}),and(user1.eq.${profileId},user2.eq.${currentUser.id})`).maybeSingle();
-  if(existing) {
-    openChat(existing.id, username);
-  } else {
-    const { data: newConv, error } = await window.supabase.from('conversations').insert({user1: currentUser.id, user2: profileId}).select().single();
-    if(error) { alert('خطأ: '+error.message); return; }
-    loadChats();
-    openChat(newConv.id, username);
-  }
-  document.getElementById('searchI').value = '';
-};
-
-
-window.startChatWith = async (profileId, username) => {
-  const { data: existing } = await window.supabase.from('conversations').select('id').or(`and(user1.eq.${currentUser.id},user2.eq.${profileId}),and(user1.eq.${profileId},user2.eq.${currentUser.id})`).maybeSingle();
-  if(existing) {
-    openChat(existing.id, username);
-  } else {
-    const { data: newConv, error } = await window.supabase.from('conversations').insert({user1: currentUser.id, user2: profileId}).select().single();
-    if(error) { alert('خطأ: '+error.message); return; }
-    loadChats();
-    openChat(newConv.id, username);
-  }
-  document.getElementById('searchI').value = '';
-};
-
-document.getElementById('avatarInp').addEventListener('change', e=>{ const r=new FileReader(); r.onload=ev=>document.getElementById('myAvatar').src=ev.target.result; r.readAsDataURL(e.target.files[0]); });
 window.saveProfile=async()=>{ await window.supabase.from('profiles').update({username:document.getElementById('myName').value,bio:document.getElementById('myBio').value,avatar_url:document.getElementById('myAvatar').src}).eq('id',currentUser.id); alert('تم الحفظ ✓'); closeProfile(); loadChats(); };
 window.addMyStatus=()=>{ const inp=document.createElement('input'); inp.type='file'; inp.accept='image/*'; inp.onchange=e=>{ const r=new FileReader(); r.onload=ev=>{ const img=new Image(); img.onload=async()=>{ const c=document.createElement('canvas'); c.width=720; c.height=img.height/img.width*720; c.getContext('2d').drawImage(img,0,0,c.width,c.height); const comp=c.toDataURL('image/jpeg',0.6); await window.supabase.from('statuses').insert({username:currentUserName,content:comp}); loadStories(); }; img.src=ev.target.result; }; r.readAsDataURL(e.target.files[0]); }; inp.click(); };
-window.openStoryViewer=(i=1)=>{ const s=window._stories[i]; if(!s||!s.content||s.content.length<10) return; document.getElementById('storyViewer').style.display='flex'; document.getElementById('stVImg').src=s.content; document.getElementById('stVName').innerText=s.username; document.getElementById('stVContent').src=s.content; };
+window.openStoryViewer=(i=1)=>{ const s=window._stories[i]; if(!s||!s.content||s.content.length<10) return; document.getElementById('storyViewer').style.display='flex'; document.getElementById('stVName').innerText=s.username; document.getElementById('stVContent').src=s.content; };
 window.closeStoryViewer=()=>document.getElementById('storyViewer').style.display='none';
 window.logOut=async()=>{ await window.supabase.auth.signOut(); location.reload(); };
 window.toast=t=>alert(t);
-window.openModal=async()=>{ const name=prompt('اسم المستخدم:'); if(!name) return; const {data:p}=await window.supabase.from('profiles').select('id').eq('username',name.trim()).single(); if(!p) return alert('غير موجود'); const {data:e}=await window.supabase.from('conversations').select('id').or(`and(user1.eq.${currentUser.id},user2.eq.${p.id}),and(user1.eq.${p.id},user2.eq.${currentUser.id})`).maybeSingle(); if(e) openChat(e.id,name); else { const {data:n}=await window.supabase.from('conversations').insert({user1:currentUser.id,user2:p.id}).select().single(); loadChats(); openChat(n.id,name);} };
+
 const {data:{session}}=await window.supabase.auth.getSession(); if(session){ currentUser=session.user; authScreen.style.display='none'; init(); }
 </script>
 </body>
