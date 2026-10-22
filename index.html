@@ -14,7 +14,6 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif}
 body{background:#020617 url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop') no-repeat center center/cover;background-attachment:fixed;min-height:100vh;color:#fff;display:flex;justify-content:center;align-items:center}
 .app{width:100%;max-width:420px;height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden;backdrop-filter:blur(10px);background:rgba(2,6,23,0.6)}
-.glass{background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:20px}
 #authScreen{display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%;padding:20px;gap:15px}
 #authScreen h1{font-size:48px;color:#00ff99;text-shadow:0 0 20px #00ff99}
 #authScreen input{width:100%;padding:15px;border-radius:15px;border:1px solid #00ff99;background:rgba(0,0,0,0.5);color:#fff;font-size:16px;text-align:center;outline:none}
@@ -42,7 +41,7 @@ body{background:#020617 url('https://images.unsplash.com/photo-1534796636912-3b9
   <div id="authScreen">
     <svg class="heart" viewBox="0 0 100 80" style="width:80px;height:80px"><path d="M50 65 C15 45, 2 28, 26 18 C34 13, 44 16, 50 24 C56 16, 66 13, 74 18 C98 28, 85 45, 50 65 Z" fill="none" stroke="gold" stroke-width="4"/><path d="M10 38 L32 38 L38 26 L44 50 L50 34 L58 42 L72 38 L90 38" fill="none" stroke="gold" stroke-width="3" stroke-linecap="round"/></svg>
     <h1>نبض</h1>
-    <input type="text" id="email" placeholder="البريد الإلكتروني" />
+    <input type="text" id="username" placeholder="اسم المستخدم" />
     <input type="password" id="password" placeholder="كلمة المرور" />
     <button id="authBtn" onclick="handleAuth()">تسجيل الدخول</button>
     <p class="switch" id="switchMode" onclick="toggleAuthMode()">ليس لديك حساب؟ إنشاء حساب</p>
@@ -83,33 +82,42 @@ body{background:#020617 url('https://images.unsplash.com/photo-1534796636912-3b9
   };
 
   window.handleAuth = async () => {
-    const username = document.getElementById('email').value; const email = username + '@nabd.app';
+    const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
-    if (!email || !password) return alert('يرجى ملء جميع الحقول');
+    if (!username || !password) return alert('يرجى ملء جميع الحقول');
+    
+    // خدعة: تحويل اسم المستخدم إلى بريد إلكتروني وهمي
+    const email = username + '@nabd.app';
+
     let result;
     if (isLogin) {
       result = await window.supabase.auth.signInWithPassword({ email, password });
     } else {
       result = await window.supabase.auth.signUp({ email, password });
       if (!result.error) {
-        const { data: { user } } = await window.supabase.auth.getUser(); if(user){ await window.supabase.from('profiles').insert({ id: user.id, username: email.split('@')[0] }); }
+        // إنشاء ملف شخصي بعد التسجيل
+        const { data: { user } } = await window.supabase.auth.getUser();
         if (user) {
-          await window.supabase.from('profiles').insert({ id: user.id, username: email.split('@')[0] });
+          await window.supabase.from('profiles').insert({ id: user.id, username: username });
         }
         alert('تم إنشاء الحساب بنجاح! جاري تسجيل الدخول...');
-        isLogin = true;
-        document.getElementById('authBtn').innerText = 'تسجيل الدخول';
-        return;
+        // تسجيل الدخول مباشرة
+        result = await window.supabase.auth.signInWithPassword({ email, password });
       }
     }
-    if (result.error) alert(result.error.message);
-    else { currentUser = result.data.user; await initUser(); }
+    
+    if (result.error) {
+      alert(result.error.message);
+    } else {
+      currentUser = result.data.user;
+      await initUser();
+    }
   };
 
   window.logout = async () => { await window.supabase.auth.signOut(); location.reload(); };
 
   async function initUser() {
-    const { data: { user } } = await window.supabase.auth.getUser(); if(user){ await window.supabase.from('profiles').insert({ id: user.id, username: email.split('@')[0] }); }
+    const { data: { user } } = await window.supabase.auth.getUser();
     if (!user) return;
     currentUser = user;
     const { data: profile } = await window.supabase.from('profiles').select('username').eq('id', user.id).single();
