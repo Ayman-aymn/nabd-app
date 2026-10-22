@@ -34,9 +34,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
 .island input::placeholder{color:#94a3b8}
 .sugs{display:none;margin-top:18px;flex:1;overflow-y:auto}
 .island.expanded .sugs{display:block}
-.sugGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.sug{padding:12px;background:#fff;border:1px solid rgba(91,141,239,.12);border-radius:14px;display:flex;gap:10px;align-items:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-.sug img{width:36px;height:36px;border-radius:50%}
 /* قصص */
 .stories{display:flex;gap:14px;overflow-x:auto;padding:8px 2px 12px;scrollbar-width:none}
 .stories::-webkit-scrollbar{display:none}
@@ -72,6 +69,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
 .inputBar{padding:10px;background:rgba(255,255,255,.9);border-top:1px solid rgba(91,141,239,.1);display:flex;gap:8px;align-items:center}
 .inputBar input{flex:1;padding:12px 16px;border-radius:22px;border:1px solid rgba(91,141,239,.15);outline:none;background:#f8fafc}
 .sendBtn{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#5b8def,#8b5cf6);color:#fff;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(91,141,239,.3)}
+/* شاشة الحالات */
+#statusView{position:fixed;inset:0;max-width:430px;margin:0 auto;background:#eef2ff;display:none;flex-direction:column;z-index:95;padding:20px}
+.statusHeader{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.statusHeader h2{color:#3b82f6}
+.closeBtn{background:#fff;border:none;border-radius:50%;width:36px;height:36px;cursor:pointer}
+.statusCard{background:#fff;border-radius:15px;padding:15px;margin-bottom:10px;display:flex;align-items:center;gap:15px;box-shadow:0 4px 12px rgba(0,0,0,0.05)}
+.statusImg{width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #5b8def}
 </style>
 </head>
 <body>
@@ -85,6 +89,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
   <p class="switch" id="switchMode" onclick="toggleAuthMode()">ليس لديك حساب؟ إنشاء حساب</p>
 </div>
 
+<!-- الشاشة الرئيسية -->
 <div class="app" id="listView" style="display:none">
   <div class="header"><div class="logo">نبض <b>♡</b></div><div style="display:flex;gap:8px"><div class="hBtn" onclick="newChat()">💬+</div><div class="hBtn" onclick="logout()">🚪</div></div></div>
 
@@ -92,11 +97,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
     <div class="dot">⌕</div>
     <input id="searchI" placeholder="ابحث في المحادثات..." oninput="doFilter(this.value)" onfocus="expand()">
     <span id="closeX" style="display:none;font-size:18px" onclick="event.stopPropagation(); collapse()">✕</span>
-    <div class="sugs" id="sugs">
-      <div style="color:#64748b;font-size:13px;margin-bottom:10px">اقتراحات سريعة</div>
-      <div class="sugGrid" id="sugGrid"></div>
-      <div style="margin-top:20px;padding:14px;background:#fff;border-radius:14px;text-align:center;border:1px solid rgba(91,141,239,.1);cursor:pointer" onclick="collapse()">إغلاق ←</div>
-    </div>
   </div>
 
   <div class="block"><div class="bTitle"><span>القصص</span></div><div class="stories" id="storiesMain"></div></div>
@@ -105,7 +105,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
   <div class="bottom">
     <div class="navItem active"><i>💬</i>الدردشات</div>
     <div class="navItem" onclick="alert('المكالمات قريباً')"><i>📞</i>مكالمات</div>
-    <div class="navItem" onclick="alert('الحالات قريباً')"><i>📷</i>حالات</div>
+    <div class="navItem" onclick="openStatus()"><i>📷</i>حالات</div>
     <div class="navItem" onclick="logout()"><i>⚙️</i>خروج</div>
   </div>
 </div>
@@ -117,11 +117,19 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
   <div class="inputBar"><input id="msgInp" placeholder="اكتب رسالة..." onkeydown="if(event.key==='Enter')send()"><button class="sendBtn" onclick="send()">➤</button></div>
 </div>
 
+<!-- شاشة الحالات -->
+<div id="statusView">
+  <div class="statusHeader"><h2>الحالات</h2><button class="closeBtn" onclick="closeStatus()">✕</button></div>
+  <div style="text-align:center;margin-bottom:20px;"><button onclick="addMyStatus()" style="padding:12px 24px;border-radius:20px;border:none;background:#5b8def;color:#fff;font-weight:bold;cursor:pointer;">+ إضافة حالة جديدة</button></div>
+  <div id="statusList"></div>
+</div>
+
 <script type="module">
   let isLogin = true;
   let currentUser = null;
   let currentConversationId = null;
   let currentChatName = null;
+  let currentUserName = null;
 
   window.toggleAuthMode = () => {
     isLogin = !isLogin;
@@ -130,8 +138,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
   };
 
   window.handleAuth = async () => {
-    const username = document.getElementById('username').value.trim();
+    const usernameInput = document.getElementById('username').value;
+    // إزالة أي مسافات أو رموز غريبة
+    const username = usernameInput.trim().replace(/\s+/g, '').replace(/[^a-zA-Z0-9_]/g, '');
     const password = document.getElementById('password').value;
+    
     if (!username || !password) return alert('يرجى ملء جميع الحقول');
     const email = username + '@nabd.app';
     let result;
@@ -155,6 +166,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
     const { data: { user } } = await window.supabase.auth.getUser();
     if (!user) return;
     currentUser = user;
+    const { data: profile } = await window.supabase.from('profiles').select('username').eq('id', user.id).single();
+    currentUserName = profile ? profile.username : 'مستخدم';
     document.getElementById('authScreen').style.display = 'none';
     document.getElementById('listView').style.display = 'flex';
     await loadConversations();
@@ -239,6 +252,54 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
       if (newMsg.conversation_id === currentConversationId) addBubble(newMsg.text, newMsg.sender_id === currentUser.id);
     }).subscribe();
   }
+
+  // --- الحالات (Status) ---
+  window.openStatus = async () => {
+    document.getElementById('statusView').style.display = 'flex';
+    document.getElementById('listView').style.display = 'none';
+    const { data } = await window.supabase.from('statuses').select('*').order('created_at', { ascending: false }).limit(20);
+    const list = document.getElementById('statusList');
+    list.innerHTML = '';
+    if (data) {
+      data.forEach(s => {
+        const div = document.createElement('div');
+        div.className = 'statusCard';
+        div.innerHTML = `<img src="${s.content}" class="statusImg"><div><div style="font-weight:900">${s.username}</div><div style="font-size:12px;color:#64748b">${new Date(s.created_at).toLocaleTimeString()}</div></div>`;
+        list.appendChild(div);
+      });
+    }
+  };
+
+  window.closeStatus = () => {
+    document.getElementById('statusView').style.display = 'none';
+    document.getElementById('listView').style.display = 'flex';
+  };
+
+  window.addMyStatus = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        const img = new Image();
+        img.onload = async () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = 720;
+          canvas.height = img.height / img.width * 720;
+          canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+          const compressed = canvas.toDataURL('image/jpeg', 0.6);
+          await window.supabase.from('statuses').insert({ username: currentUserName, content: compressed });
+          openStatus(); // تحديث القائمة
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  };
 
   const { data: { session } } = await window.supabase.auth.getSession();
   if (session) { currentUser = session.user; await initUser(); }
