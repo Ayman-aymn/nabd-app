@@ -2,149 +2,112 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>نبض - 4D Glass</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>نبض - Nabd</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&display=swap" rel="stylesheet">
 <script type="module">
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
-window.supabase = createClient('https://lmgshabrtmvbnpdhkkst.supabase.co', 'sb_publishable_XCTUMu79wWd2wQFmM51vVg_nec2Glwb')
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+  const supabase = createClient('https://lmgshabrtmvbnpdhkkst.supabase.co', 'sb_publishable_XCTUMu79wWd2wQFmM51vVg_nec2Glwb')
+  window.supabase = supabase;
 </script>
 <style>
-/* نفس التصميم الذي أرسلته أنت */
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif;-webkit-tap-highlight-color:transparent}
-body{min-height:100vh;background:radial-gradient(1200px 600px at 20% 0%, #eef2ff 0%, #d8e2ff 20%, #c9d5ff 40%, #c7b8ff 85%, #b8a6ff 100%);color:#2f365f}
-.app{max-width:440px;margin:0 auto;min-height:100vh;padding:12px 18px 100px}
-.header{display:flex;justify-content:space-between;align-items:center;padding:6px 4px;margin-bottom:10px}
-.logo{font-size:30px;font-weight:900;color:#5b5bd6}
-.island{width:100%;height:56px;background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(235,240,255,0.9));border:1.5px solid #fff;border-radius:28px;display:flex;align-items:center;gap:12px;padding:0 20px}
-.island input{flex:1;border:none;background:transparent;outline:none;font-size:16px;font-weight:700;color:#3a3a6e}
-.section{font-size:18px;font-weight:800;color:#2a2a5a;margin:24px 6px 16px}
-.stories{display:flex;gap:18px;overflow-x:auto;padding:6px 4px 10px}
-.story{flex:0 0 84px;text-align:center}
-.bubble3d{width:84px;height:84px;border-radius:50%;background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(220,225,255,0.7));border:1.5px solid #fff;display:grid;place-items:center;position:relative;padding:6px}
-.bubble3d img{width:100%;height:100%;border-radius:50%;object-fit:cover}
-.bubble3d .plus{position:absolute;bottom:2px;right:2px;width:24px;height:24px;background:#8b7eff;color:#fff;border-radius:50%;display:grid;place-items:center;font-size:14px;border:2px solid #fff}
-.sName{font-size:12px;font-weight:700;margin-top:8px}
-.chat{width:100%;min-height:72px;background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(238,242,255,0.95));border:1.5px solid rgba(255,255,255,0.85);border-radius:20px;display:flex;align-items:center;gap:12px;padding:10px 14px;margin-bottom:12px;cursor:pointer}
-.chat img{width:52px;height:52px;border-radius:50%;border:2px solid #fff}
-.cName{font-weight:800;font-size:16px;color:#1e1e4a}
-.cLast{font-size:12.5px;color:#6b6b9a}
-.bottom{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);width:calc(100% - 36px);max-width:380px;height:56px;background:linear-gradient(180deg, #fff, #eef2ff);border:1.5px solid #fff;border-radius:28px;display:flex;justify-content:space-around;align-items:center;box-shadow:0 12px 32px rgba(120,130,220,0.2)}
-.bottom button{width:44px;height:44px;border-radius:14px;border:none;background:transparent;font-size:22px;color:#9aa0d0}
-.bottom button.active{background:#fff;color:#6b6ee6}
-#chatView,#profileView,#storyViewer{position:fixed;inset:0;max-width:440px;margin:0 auto;background:radial-gradient(800px at top, #eef2ff, #d8e2ff);display:none;flex-direction:column;z-index:90}
-.bubbles{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
-.bM{max-width:76%;padding:11px 14px;border-radius:18px;font-size:14px}
-.bM.me{align-self:flex-end;background:linear-gradient(135deg,#7c8aff,#8b5cf6);color:#fff}
-.bM.other{align-self:flex-start;background:#fff;color:#1e293b}
-.inputBar{padding:10px 12px;display:flex;gap:8px;background:rgba(255,255,255,0.9)}
-.inputBar input{flex:1;padding:12px 16px;border-radius:22px;border:1.5px solid #eee;outline:none}
-.sendBtn{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#7c8aff,#8b5cf6);color:#fff;border:none}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif}
+body{background:#050a18;min-height:100vh;color:#fff}
+.app{max-width:410px;margin:0 auto;padding:10px;min-height:100vh;display:flex;flex-direction:column}
+.header{background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.12);border-radius:22px;padding:12px 14px;display:flex;align-items:center;gap:12px}
+.heart{width:54px;height:48px;filter:drop-shadow(0 0 6px gold)}
+.logo{font-size:40px;font-weight:900;color:#00ff99}
+.search{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:12px;color:#fff;outline:none;margin-bottom:14px}
+.chat{display:flex;align-items:center;gap:12px;padding:14px;border-radius:20px;margin-bottom:10px;background:rgba(255,255,255,0.07);border:2px solid transparent;cursor:pointer}
+.chat.green{border-color:#00ff99}.chat.purple{border-color:#b86bff}
+.avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;flex-shrink:0}
+.green .avatar{background:radial-gradient(circle, #0a2a1f, #000);border:1.5px solid #00ff99;color:#00ff99}
+.purple .avatar{background:radial-gradient(circle, #1f0a2a, #000);border:1.5px solid #b86bff;color:#b86bff}
+.info{flex:1;min-width:0}.name{font-size:17px;font-weight:800}.last{font-size:13px;opacity:0.7}
+#chatView{display:none;flex-direction:column;flex:1}
+.bubble{max-width:80%;padding:12px;border-radius:18px;margin-bottom:10px;font-size:14px;line-height:1.5;position:relative;word-break:break-word}
+.bubble.p{align-self:flex-start;background:rgba(184,107,255,0.12);border:2px solid #b86bff}
+.bubble.g{align-self:flex-end;background:rgba(0,255,153,0.10);border:2px solid #00ff99}
+.bt{font-size:11px;opacity:0.6;margin-top:6px;display:block;text-align:left}
+.inputBar{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);width:calc(100% - 20px);max-width:410px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:26px;padding:8px 10px;display:flex;align-items:center;gap:8px;z-index:10}
+.inputBar input{flex:1;background:rgba(255,255,255,0.08);border:none;border-radius:18px;padding:10px 12px;color:#fff;outline:none}
+.plus{font-size:26px;color:#b86bff;cursor:pointer}
+.send{width:40px;height:40px;border-radius:50%;background:rgba(0,255,153,0.12);border:1.8px solid #00ff99;color:#00ff99;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px}
 </style>
 </head>
 <body>
-<div class="app" id="listView">
-  <div class="header"><div class="logo">نبض ♡</div><div style="width:38px;height:38px;border-radius:50%;background:#fff;display:grid;place-items:center" onclick="openProfile()">👤</div></div>
-  <div class="island"><div style="width:38px;height:38px;border-radius:50%;background:#8b7eff;display:grid;place-items:center;color:#fff">⌕</div><input id="searchI" placeholder="ابحث عن مستخدم..." oninput="doSearch(this.value)"></div>
-  <div class="section">القصص</div>
-  <div class="stories" id="storiesMain"></div>
-  <div class="section">الدردشات</div>
-  <div id="chatList"></div>
-  <div class="bottom">
-    <button onclick="openProfile()">👤</button>
-    <button onclick="alert('قريبا')">📷</button>
-    <button onclick="alert('قريبا')">📞</button>
-    <button class="active">💬</button>
+<div class="app">
+  <div id="listView">
+    <div class="header"><svg class="heart" viewBox="0 0 100 80"><path d="M50 65 C15 45, 2 28, 26 18 C34 13, 44 16, 50 24 C56 16, 66 13, 74 18 C98 28, 85 45, 50 65 Z" fill="none" stroke="gold" stroke-width="4"/><path d="M10 38 L32 38 L38 26 L44 50 L50 34 L58 42 L72 38 L90 38" fill="none" stroke="gold" stroke-width="3" stroke-linecap="round"/></svg><div class="logo">نبض</div></div>
+    <input class="search" id="searchInput" placeholder="🔍 بحث..." oninput="filterChats(this.value)">
+    <div style="color:#b86bff;font-weight:800;margin-bottom:8px">الدردشات</div>
+    <div id="chatList"></div>
+  </div>
+  <div id="chatView">
+    <div class="header"><span style="font-size:24px;color:#b86bff;cursor:pointer" onclick="closeChat()">›</span><svg class="heart" style="width:40px;height:36px" viewBox="0 0 100 80"><path d="M50 65 C15 45, 2 28, 26 18 C34 13, 44 16, 50 24 C56 16, 66 13, 74 18 C98 28, 85 45, 50 65 Z" fill="none" stroke="gold" stroke-width="4"/></svg><div style="flex:1"><div id="chatName" style="font-weight:800"></div></div></div>
+    <div style="flex:1;padding:14px 0;display:flex;flex-direction:column;gap:2px;overflow-y:auto" id="msgs"></div>
   </div>
 </div>
-
-<div id="chatView">
-  <div style="padding:10px"><div class="island" style="height:56px"><div style="font-size:20px;cursor:pointer" onclick="closeChat()">‹</div><img id="cvImg" style="width:40px;height:40px;border-radius:50%"><div style="flex:1"><div id="cvName" style="font-weight:800"></div></div></div></div>
-  <div class="bubbles" id="bubbles"></div>
-  <div class="inputBar"><input id="msgInp" placeholder="اكتب رسالة..." onkeydown="if(event.key==='Enter')send()"><button class="sendBtn" onclick="send()">➤</button></div>
+<div class="inputBar" id="inputBar" style="display:none">
+  <span class="plus" onclick="sendImage()">+</span>
+  <input id="msgInput" placeholder="اكتب رسالة..." onkeydown="if(event.key==='Enter')sendMsg()">
+  <div class="send" onclick="sendMsg()">➤</div>
 </div>
-
-<div id="profileView">
-  <div style="padding:10px"><div class="island" style="height:56px"><div style="font-size:20px;cursor:pointer" onclick="closeProfile()">‹</div><b style="flex:1">ملفي الشخصي</b><div style="font-size:20px;cursor:pointer" onclick="saveProfile()">✓</div></div></div>
-  <div style="padding:20px;text-align:center"><img id="myAvatar" style="width:110px;height:110px;border-radius:50%;border:4px solid #fff"><div style="margin-top:20px;text-align:right"><label>اسم المستخدم</label><input id="myName" class="island" style="margin-top:6px"><label style="display:block;margin-top:12px">نبذة</label><input id="myBio" class="island" style="margin-top:6px"><button onclick="logOut()" style="margin-top:20px;width:100%;height:48px;background:#fee2e2;color:#ef4444;border-radius:16px;font-weight:800">تسجيل خروج</button></div></div>
-</div>
-
 <script type="module">
-let currentUser=null,currentChatId=null,currentUserName=null,realtimeChannel=null;
-const authScreen=document.createElement('div');
-authScreen.style.cssText='position:fixed;inset:0;background:radial-gradient(#eef2ff,#d8e2ff);z-index:200;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:14px;padding:20px';
-authScreen.innerHTML=`<h1 style="font-size:44px;color:#6366f1;font-weight:900">نبض ♡</h1><input id="user" placeholder="اسم المستخدم" style="width:100%;max-width:320px;height:52px;border-radius:26px;border:1px solid #fff;padding:0 20px;background:#fff"><input id="pass" type="password" placeholder="كلمة المرور" style="width:100%;max-width:320px;height:52px;border-radius:26px;border:1px solid #fff;padding:0 20px;background:#fff"><button onclick="handleAuth()" style="width:100%;max-width:320px;height:52px;border-radius:26px;border:none;background:linear-gradient(135deg,#7c8aff,#8b5cf6);color:#fff;font-weight:800">دخول / تسجيل</button>`;
-document.body.appendChild(authScreen);
+  const chats = [
+    {name:'أحمد خالد', last:'تمام، سأرسل الملف', color:'green'},
+    {name:'سارة محمود', last:'شكراً لردك', color:'purple'},
+    {name:'فريق المشروع', last:'تم تحديث المستندات', color:'green'}
+  ]
+  let currentChat = null
+  let myName = "أنا"
 
-window.handleAuth=async()=>{
- const u=document.getElementById('user').value.trim().replace(/[^a-zA-Z0-9_]/g,''); const p=document.getElementById('pass').value;
- if(!u||!p) return alert('اكمل البيانات'); const email=u+'@nabd.app';
- let res=await window.supabase.auth.signInWithPassword({email,password:p});
- if(res.error){ res=await window.supabase.auth.signUp({email,password:p}); if(!res.error){ const {data:{user}}=await window.supabase.auth.getUser(); if(user) await window.supabase.from('profiles').insert({id:user.id,username:u}).catch(()=>{}); res=await window.supabase.auth.signInWithPassword({email,password:p}); } }
- if(res.error) alert(res.error.message); else { currentUser=res.data.user; currentUserName=u; authScreen.style.display='none'; init(); }
-};
+  function renderChats(list=chats){
+    document.getElementById('chatList').innerHTML = list.map(c=>`
+      <div class="chat ${c.color}" onclick="openChat('${c.name}')">
+        <div class="avatar">${c.name[0]}</div>
+        <div class="info"><div class="name">${c.name}</div><div class="last">${c.last}</div></div>
+      </div>`).join('')
+  }
+  renderChats()
 
-async function init(){
- const {data:p}=await window.supabase.from('profiles').select('*').eq('id',currentUser.id).single();
- document.getElementById('myName').value=p?.username||''; document.getElementById('myBio').value=p?.bio||'';
- document.getElementById('myAvatar').src=p?.avatar_url||`https://i.pravatar.cc/200?u=${currentUser.id}`;
- loadChats(); loadStories();
- const saved=localStorage.getItem('nabd_chat'); if(saved){ const [id,name]=saved.split('|'); setTimeout(()=>openChat(id,name),500); }
-}
+  window.openChat = async (name) => {
+    currentChat = name
+    document.getElementById('chatName').innerText = name
+    document.getElementById('listView').style.display = 'none'
+    document.getElementById('chatView').style.display = 'flex'
+    document.getElementById('inputBar').style.display = 'flex'
+    await loadMessages(name)
+  }
 
-async function loadChats(){
- const {data}=await window.supabase.from('conversations').select('*, u1:profiles!conversations_user1_fkey(username), u2:profiles!conversations_user2_fkey(username)').or(`user1.eq.${currentUser.id},user2.eq.${currentUser.id}`);
- const list=document.getElementById('chatList');
- if(!data||data.length===0){ list.innerHTML='<div class="island" style="justify-content:center">لا توجد محادثات</div>'; return; }
- list.innerHTML=data.map(c=>{ const other=c.user1===currentUser.id?c.u2.username:c.u1.username; return `<div class="chat" onclick="openChat('${c.id}','${other}')"><img src="https://i.pravatar.cc/100?u=${other}"><div style="flex:1"><div class="cName">${other}</div><div class="cLast">${c.last_message||'محادثة'}</div></div></div>`; }).join('');
-}
+  window.closeChat = () => {
+    document.getElementById('chatView').style.display = 'none'
+    document.getElementById('inputBar').style.display = 'none'
+    document.getElementById('listView').style.display = 'block'
+    currentChat = null
+  }
 
-window.doSearch=async(q)=>{
- if(!q.trim()){ loadChats(); return; }
- const {data}=await window.supabase.from('profiles').select('id,username').ilike('username',`%${q}%`).limit(5);
- const list=document.getElementById('chatList');
- list.innerHTML=data.length? data.map(u=>`<div class="chat" onclick="startChat('${u.id}','${u.username}')"><img src="https://i.pravatar.cc/100?u=${u.username}"><div style="flex:1"><div class="cName">${u.username}</div><div class="cLast">اضغط للمحادثة</div></div></div>`).join('') : '<div class="island" style="justify-content:center">لا يوجد مستخدم</div>';
-};
+  async function loadMessages(name) {
+    const chatId = [myName, name].sort().join('_')
+    const { data, error } = await window.supabase.from('messages').select('*').eq('chat', chatId).order('created_at', { ascending: true })
+    if (data) {
+      document.getElementById('msgs').innerHTML = data.map(m=>`<div class="bubble ${m.sender===myName?'g':'p'}">${m.text}<span class="bt">${new Date(m.created_at).toLocaleTimeString()}</span></div>`).join('')
+      document.getElementById('msgs').scrollTop = 9999
+    }
+  }
 
-window.startChat=async(id,name)=>{
- const {data:e}=await window.supabase.from('conversations').select('id').or(`and(user1.eq.${currentUser.id},user2.eq.${id}),and(user1.eq.${id},user2.eq.${currentUser.id})`).maybeSingle();
- if(e) openChat(e.id,name);
- else { const {data:n}=await window.supabase.from('conversations').insert({user1:currentUser.id,user2:id}).select().single(); loadChats(); openChat(n.id,name); }
-};
+  window.sendMsg = async () => {
+    const inp = document.getElementById('msgInput')
+    if (!inp.value.trim() || !currentChat) return
+    const text = inp.value
+    const chatId = [myName, currentChat].sort().join('_')
+    await window.supabase.from('messages').insert({ chat: chatId, sender: myName, text: text })
+    document.getElementById('msgs').innerHTML += `<div class="bubble g">${text}<span class="bt">الآن</span></div>`
+    inp.value = ''
+    document.getElementById('msgs').scrollTop = 9999
+  }
 
-window.openChat=async(id,name)=>{
- currentChatId=id; document.getElementById('cvName').innerText=name; document.getElementById('cvImg').src=`https://i.pravatar.cc/100?u=${name}`;
- localStorage.setItem('nabd_chat',`${id}|${name}`);
- document.getElementById('listView').style.display='none'; document.getElementById('chatView').style.display='flex';
- const {data}=await window.supabase.from('messages').select('*').eq('conversation_id',id).order('created_at'); render(data||[]); subscribe(id);
-};
-
-function render(data){
- document.getElementById('bubbles').innerHTML=data.map(m=>`<div class="bM ${m.sender_id===currentUser.id?'me':'other'}">${m.text}</div>`).join('');
- document.getElementById('bubbles').scrollTop=999999;
-}
-
-function subscribe(id){
- if(realtimeChannel) window.supabase.removeChannel(realtimeChannel);
- realtimeChannel=window.supabase.channel('chat_'+id).on('postgres_changes',{event:'INSERT',schema:'public',table:'messages',filter:`conversation_id=eq.${id}`},payload=>{
-   if(payload.new.sender_id!==currentUser.id){ document.getElementById('bubbles').innerHTML+=`<div class="bM other">${payload.new.text}</div>`; document.getElementById('bubbles').scrollTop=999999; }
- }).subscribe();
-}
-
-window.send=async()=>{
- const inp=document.getElementById('msgInp'); if(!inp.value.trim()||!currentChatId) return; const text=inp.value; inp.value='';
- await window.supabase.from('messages').insert({conversation_id:currentChatId,sender_id:currentUser.id,text});
- await window.supabase.from('conversations').update({last_message:text}).eq('id',currentChatId);
- const {data}=await window.supabase.from('messages').select('*').eq('conversation_id',currentChatId).order('created_at'); render(data);
-};
-
-window.openProfile=()=>{ document.getElementById('listView').style.display='none'; document.getElementById('profileView').style.display='flex'; };
-window.closeProfile=()=>{ document.getElementById('profileView').style.display='none'; document.getElementById('listView').style.display='block'; };
-window.closeChat=()=>{ document.getElementById('chatView').style.display='none'; document.getElementById('listView').style.display='block'; localStorage.removeItem('nabd_chat'); };
-window.saveProfile=async()=>{ await window.supabase.from('profiles').update({username:document.getElementById('myName').value,bio:document.getElementById('myBio').value,avatar_url:document.getElementById('myAvatar').src}).eq('id',currentUser.id); alert('تم الحفظ'); closeProfile(); loadChats(); };
-window.addMyStatus=()=>{ const inp=document.createElement('input'); inp.type='file'; inp.accept='image/*'; inp.onchange=e=>{ const r=new FileReader(); r.onload=ev=>{ const img=new Image(); img.onload=async()=>{ const c=document.createElement('canvas'); c.width=720; c.height=img.height/img.width*720; c.getContext('2d').drawImage(img,0,0,c.width,c.height); const comp=c.toDataURL('image/jpeg',0.6); await window.supabase.from('statuses').insert({username:currentUserName,content:comp}); loadStories(); }; img.src=ev.target.result; }; r.readAsDataURL(e.target.files[0]); }; inp.click(); };
-window.logOut=async()=>{ await window.supabase.auth.signOut(); location.reload(); };
-const {data:{session}}=await window.supabase.auth.getSession(); if(session){ currentUser=session.user; authScreen.style.display='none'; init(); }
+  window.filterChats = (q) => renderChats(chats.filter(c=>c.name.includes(q) || c.last.includes(q)))
 </script>
 </body>
 </html>
