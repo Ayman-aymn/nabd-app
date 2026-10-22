@@ -14,22 +14,14 @@ window.supabase = createClient('https://lmgshabrtmvbnpdhkkst.supabase.co', 'sb_p
 body{min-height:100vh;background:#d9e2ff;background:radial-gradient(1200px 600px at 20% 0%, #eef2ff 0%, #d8e2ff 20%, #c9d5ff 40%, #c7b8ff 85%, #b8a6ff 100%);overflow-x:hidden;color:#2f365f;position:relative}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(400px at 15% 20%, rgba(255,255,255,0.8) 0%, transparent 60%), radial-gradient(300px at 85% 75%, rgba(255,255,255,0.6) 0%, transparent 50%), radial-gradient(200px at 50% 50%, rgba(255,255,255,0.4) 0%, transparent 70%)}
 .app{max-width:440px;margin:0 auto;min-height:100vh;padding:12px 18px 100px;position:relative;z-index:1}
-
-/* الهيدر */
 .header{display:flex;justify-content:space-between;align-items:center;padding:6px 4px;margin-bottom:10px}
 .logo{font-size:30px;font-weight:900;color:#5b5bd6;letter-spacing:-0.5px;display:flex;align-items:center;gap:4px}
 .logo i{font-style:normal;font-size:20px;opacity:0.6;font-weight:400}
-
-/* جزيرة البحث */
 .island{width:100%;height:56px;background:linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(235,240,255,0.9) 100%);border:1.5px solid rgba(255,255,255,0.9);border-radius:28px;display:flex;align-items:center;gap:12px;padding:0 20px;box-shadow:0 12px 24px rgba(120,130,220,0.15), 0 4px 8px rgba(120,130,220,0.1), inset 0 1px 0 #fff, inset 0 -1px 0 rgba(120,130,220,0.1);cursor:text}
 .island .icon{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg, #c7b8ff, #8b7eff);display:grid;place-items:center;color:#fff;font-size:20px;box-shadow:0 4px 12px rgba(139,126,255,0.3)}
 .island input{flex:1;border:none;background:transparent;outline:none;font-size:16px;font-weight:700;color:#3a3a6e}
 .island input::placeholder{color:#7a7ab0}
-
-/* العناوين */
 .section{font-size:18px;font-weight:800;color:#2a2a5a;margin:24px 6px 16px}
-
-/* القصص */
 .stories{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;padding:6px 4px 10px}
 .stories::-webkit-scrollbar{display:none}
 .story{flex:0 0 84px;text-align:center;cursor:pointer}
@@ -38,8 +30,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .bubble3d .plus{position:absolute;bottom:2px;right:2px;width:24px;height:24px;background:linear-gradient(135deg, #a78bfa, #8b7eff);color:#fff;border-radius:50%;display:grid;place-items:center;font-size:14px;font-weight:800;border:2px solid #fff;box-shadow:0 2px 8px rgba(139,126,255,0.4)}
 .bubble3d.group{background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(210,210,255,0.6))}
 .sName{font-size:12px;font-weight:700;margin-top:8px;color:#3a3a6e}
-
-/* الدردشات */
 .chat{width:100%;min-height:72px;background:linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(238,242,255,0.95) 100%);border:1.5px solid rgba(255,255,255,0.85);border-radius:20px;display:flex;align-items:center;gap:12px;padding:10px 14px;margin-bottom:12px;box-shadow:0 8px 20px rgba(120,130,220,0.12), 0 2px 6px rgba(120,130,220,0.08), inset 0 1px 0 #fff, inset 0 -1px 0 rgba(120,130,220,0.05);cursor:pointer;transition:0.2s}
 .chat:active{transform:scale(0.98)}
 .chat img{width:52px;height:52px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
@@ -47,12 +37,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .cMeta{font-size:11px;color:#8a8ac0;text-align:left;line-height:1.4}
 .badge{background:linear-gradient(135deg, #d8cfff, #c9b8ff);color:#6b5bcf;min-width:24px;height:24px;border-radius:8px;display:grid;place-items:center;font-size:12px;font-weight:800;padding:0 6px;border:1px solid rgba(255,255,255,0.8)}
 .online{width:10px;height:10px;background:#22c55e;border-radius:50%;border:2px solid #fff;position:absolute;bottom:2px;right:2px}
-
-/* الشريط السفلي */
 .bottom{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);width:calc(100% - 36px);max-width:380px;height:56px;background:linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(235,240,255,0.95) 100%);border:1.5px solid rgba(255,255,255,0.9);border-radius:28px;display:flex;justify-content:space-around;align-items:center;box-shadow:0 12px 32px rgba(120,130,220,0.2), 0 4px 12px rgba(120,130,220,0.15), inset 0 1px 0 #fff;z-index:20;padding:0 10px}
 .bottom button{width:44px;height:44px;border-radius:14px;border:none;background:transparent;display:grid;place-items:center;font-size:22px;cursor:pointer;color:#9aa0d0}
 .bottom button.active{background:linear-gradient(180deg, #fff, #eef2ff);box-shadow:0 4px 12px rgba(120,130,220,0.15), inset 0 1px 0 #fff;color:#6b6ee6;border:1px solid rgba(255,255,255,0.8)}
-
 #chatView,#profileView,#storyViewer{position:fixed;inset:0;max-width:440px;margin:0 auto;background:radial-gradient(800px at top, #eef2ff 0%, #d8e2ff 40%, #c7b8ff 100%);display:none;flex-direction:column;z-index:90}
 .bubbles{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
 .bM{max-width:76%;padding:11px 14px;border-radius:18px;font-size:14px;box-shadow:0 2px 12px rgba(0,0,0,0.06)} .bM.me{align-self:flex-end;background:linear-gradient(135deg,#7c8aff,#8b5cf6);color:#fff;border-bottom-left-radius:6px} .bM.other{align-self:flex-start;background:#fff;color:#1e293b;border-bottom-right-radius:6px} .bM img{max-width:180px;border-radius:12px}
@@ -91,7 +78,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 <div id="storyViewer" style="background:#000"><div style="padding:14px;display:flex;justify-content:space-between;color:#fff;z-index:2"><b id="stVName"></b><div onclick="closeStoryViewer()" style="font-size:28px;cursor:pointer">✕</div></div><img id="stVContent" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0;margin:auto"></div>
 
 <script type="module">
-let currentUser=null,currentChatId=null,currentUserName=null,mediaRecorder=null,audioChunks=[],isRec=false;
+let currentUser=null,currentChatId=null,currentUserName=null,mediaRecorder=null,audioChunks=[],isRec=false,realtimeChannel=null;
 const authScreen=document.createElement('div');
 authScreen.style.cssText='position:fixed;inset:0;background:radial-gradient(800px at top, #eef2ff, #d8e2ff);z-index:200;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:14px;padding:20px';
 authScreen.innerHTML=`<h1 style="font-size:44px;color:#6366f1;font-weight:900">نبض ♡</h1><p style="color:#7a7ab0">تصميم 4D زجاجي حقيقي</p><input id="user" placeholder="اسم المستخدم" style="width:100%;max-width:320px;height:52px;border-radius:26px;border:1.5px solid #fff;padding:0 20px;background:rgba(255,255,255,0.8);box-shadow:0 8px 20px rgba(120,130,220,0.12)"><input id="pass" type="password" placeholder="كلمة المرور" style="width:100%;max-width:320px;height:52px;border-radius:26px;border:1.5px solid #fff;padding:0 20px;background:rgba(255,255,255,0.8)"><button onclick="handleAuth()" style="width:100%;max-width:320px;height:52px;border-radius:26px;border:none;background:linear-gradient(135deg,#7c8aff,#8b5cf6);color:#fff;font-weight:800;box-shadow:0 8px 20px rgba(139,126,255,0.3)">دخول / تسجيل</button>`;
@@ -108,7 +95,11 @@ async function init(){
  const {data:p}=await window.supabase.from('profiles').select('*').eq('id',currentUser.id).single(); currentUserName=p?.username||'مستخدم';
  document.getElementById('myName').value=p?.username||''; document.getElementById('myBio').value=p?.bio||'';
  document.getElementById('myAvatar').src=p?.avatar_url||`https://i.pravatar.cc/200?u=${currentUser.id}`;
- loadChats(); loadStories();
+ loadChats(); loadStories(); setupRealtime();
+ 
+ // استعادة المحادثة الأخيرة
+ const savedChat = localStorage.getItem('nabd_last_chat');
+ if(savedChat) { const [id, name] = savedChat.split('|'); setTimeout(()=>openChat(id, name), 500); }
 }
 
 async function loadStories(){
@@ -127,7 +118,7 @@ async function loadChats(){
 }
 
 window.doSearch=async(q)=>{
- if(!q.trim()){ document.getElementById('chatList').innerHTML=''; loadChats(); return; }
+ if(!q.trim()){ loadChats(); return; }
  const {data}=await window.supabase.from('profiles').select('id,username').ilike('username',`%${q}%`).limit(5);
  const list=document.getElementById('chatList');
  if(data && data.length>0){
@@ -148,8 +139,10 @@ window.startChatWithUser=async(userId,username)=>{
 
 window.openChat=async(id,name)=>{
  currentChatId=id; document.getElementById('cvName').innerText=name; document.getElementById('cvImg').src=`https://i.pravatar.cc/100?u=${name}`;
+ localStorage.setItem('nabd_last_chat', `${id}|${name}`);
  document.getElementById('listView').style.display='none'; document.getElementById('chatView').style.display='flex';
  const {data}=await window.supabase.from('messages').select('*').eq('conversation_id',id).order('created_at'); renderMsgs(data||[]);
+ subscribeToChat(id);
 };
 
 function renderMsgs(data){
@@ -157,6 +150,17 @@ function renderMsgs(data){
    let inner=m.text; if(inner.startsWith('data:image')) inner=`<img src="${inner}">`; else if(inner.startsWith('data:audio')) inner=`<audio controls src="${inner}" style="width:180px"></audio>`;
    return `<div class="bM ${m.sender_id===currentUser.id?'me':'other'}">${inner}</div>`;
  }).join(''); document.getElementById('bubbles').scrollTop=999999;
+}
+
+function subscribeToChat(id){
+ if(realtimeChannel) window.supabase.removeChannel(realtimeChannel);
+ realtimeChannel = window.supabase.channel('chat_'+id).on('postgres_changes',{event:'INSERT',schema:'public',table:'messages',filter:`conversation_id=eq.${id}`},payload=>{
+   if(payload.new.sender_id!==currentUser.id){
+     let inner=payload.new.text; if(inner.startsWith('data:image')) inner=`<img src="${inner}">`;
+     document.getElementById('bubbles').innerHTML+=`<div class="bM other">${inner}</div>`;
+     document.getElementById('bubbles').scrollTop=999999;
+   }
+ }).subscribe();
 }
 
 window.send=async()=>{
@@ -177,7 +181,7 @@ window.toggleRec=async()=>{
 
 window.openProfile=()=>{ document.getElementById('listView').style.display='none'; document.getElementById('profileView').style.display='flex'; };
 window.closeProfile=()=>{ document.getElementById('profileView').style.display='none'; document.getElementById('listView').style.display='block'; };
-window.closeChat=()=>{ document.getElementById('chatView').style.display='none'; document.getElementById('listView').style.display='block'; };
+window.closeChat=()=>{ document.getElementById('chatView').style.display='none'; document.getElementById('listView').style.display='block'; localStorage.removeItem('nabd_last_chat'); };
 window.saveProfile=async()=>{ await window.supabase.from('profiles').update({username:document.getElementById('myName').value,bio:document.getElementById('myBio').value,avatar_url:document.getElementById('myAvatar').src}).eq('id',currentUser.id); alert('تم الحفظ ✓'); closeProfile(); loadChats(); };
 window.addMyStatus=()=>{ const inp=document.createElement('input'); inp.type='file'; inp.accept='image/*'; inp.onchange=e=>{ const r=new FileReader(); r.onload=ev=>{ const img=new Image(); img.onload=async()=>{ const c=document.createElement('canvas'); c.width=720; c.height=img.height/img.width*720; c.getContext('2d').drawImage(img,0,0,c.width,c.height); const comp=c.toDataURL('image/jpeg',0.6); await window.supabase.from('statuses').insert({username:currentUserName,content:comp}); loadStories(); }; img.src=ev.target.result; }; r.readAsDataURL(e.target.files[0]); }; inp.click(); };
 window.openStoryViewer=(i=1)=>{ const s=window._stories[i]; if(!s||!s.content||s.content.length<10) return; document.getElementById('storyViewer').style.display='flex'; document.getElementById('stVName').innerText=s.username; document.getElementById('stVContent').src=s.content; };
@@ -186,7 +190,6 @@ window.logOut=async()=>{ await window.supabase.auth.signOut(); location.reload()
 window.toast=t=>alert(t);
 
 const {data:{session}}=await window.supabase.auth.getSession(); if(session){ currentUser=session.user; authScreen.style.display='none'; init(); }
-const savedChat = localStorage.getItem("lastChat"); if(savedChat) { const [id, name] = savedChat.split("|"); openChat(id, name); }
 </script>
 </body>
 </html>
