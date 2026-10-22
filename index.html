@@ -85,33 +85,21 @@ body{background:#020617 url('https://images.unsplash.com/photo-1534796636912-3b9
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
     if (!username || !password) return alert('يرجى ملء جميع الحقول');
-    
-    // خدعة: تحويل اسم المستخدم إلى بريد إلكتروني وهمي
     const email = username + '@nabd.app';
-
     let result;
     if (isLogin) {
       result = await window.supabase.auth.signInWithPassword({ email, password });
     } else {
       result = await window.supabase.auth.signUp({ email, password });
       if (!result.error) {
-        // إنشاء ملف شخصي بعد التسجيل
         const { data: { user } } = await window.supabase.auth.getUser();
-        if (user) {
-          await window.supabase.from('profiles').insert({ id: user.id, username: username });
-        }
+        if (user) await window.supabase.from('profiles').insert({ id: user.id, username: username });
         alert('تم إنشاء الحساب بنجاح! جاري تسجيل الدخول...');
-        // تسجيل الدخول مباشرة
         result = await window.supabase.auth.signInWithPassword({ email, password });
       }
     }
-    
-    if (result.error) {
-      alert(result.error.message);
-    } else {
-      currentUser = result.data.user;
-      await initUser();
-    }
+    if (result.error) alert(result.error.message);
+    else { currentUser = result.data.user; await initUser(); }
   };
 
   window.logout = async () => { await window.supabase.auth.signOut(); location.reload(); };
