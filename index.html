@@ -15,13 +15,11 @@
 body{background:#020617 url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop') no-repeat center center/cover;background-attachment:fixed;min-height:100vh;color:#fff;display:flex;justify-content:center;align-items:center}
 .app{width:100%;max-width:420px;height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden;backdrop-filter:blur(10px);background:rgba(2,6,23,0.6)}
 .glass{background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:20px}
-/* شاشة الدخول */
 #authScreen{display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%;padding:20px;gap:15px}
 #authScreen h1{font-size:48px;color:#00ff99;text-shadow:0 0 20px #00ff99}
 #authScreen input{width:100%;padding:15px;border-radius:15px;border:1px solid #00ff99;background:rgba(0,0,0,0.5);color:#fff;font-size:16px;text-align:center;outline:none}
 #authScreen button{width:100%;padding:15px;border-radius:15px;border:none;background:#00ff99;color:#020617;font-weight:900;font-size:18px;cursor:pointer;box-shadow:0 0 15px #00ff99}
 #authScreen .switch{color:#b86bff;cursor:pointer;text-decoration:underline;font-size:14px}
-/* شاشة الدردشات */
 #listView{display:none;flex-direction:column;height:100%;overflow-y:auto;padding:15px}
 .header{padding:15px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-size:32px;font-weight:900;color:#00ff99;text-shadow:0 0 10px #00ff99}
@@ -29,7 +27,6 @@ body{background:#020617 url('https://images.unsplash.com/photo-1534796636912-3b9
 .chat-card{display:flex;align-items:center;gap:12px;padding:15px;margin-bottom:10px;border-radius:20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);cursor:pointer;transition:0.3s}
 .chat-card:hover{background:rgba(255,255,255,0.1)}
 .avatar{width:50px;height:50px;border-radius:50%;background:#020617;border:2px solid #00ff99;display:flex;justify-content:center;align-items:center;font-weight:900;color:#00ff99}
-/* شاشة المحادثة */
 #chatView{display:none;flex-direction:column;height:100%;padding:10px}
 #msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:10px}
 .bubble{max-width:80%;padding:12px;border-radius:18px;font-size:14px;position:relative;word-break:break-word}
@@ -42,7 +39,6 @@ body{background:#020617 url('https://images.unsplash.com/photo-1534796636912-3b9
 </head>
 <body>
 <div class="app">
-  <!-- شاشة تسجيل الدخول -->
   <div id="authScreen">
     <svg class="heart" viewBox="0 0 100 80" style="width:80px;height:80px"><path d="M50 65 C15 45, 2 28, 26 18 C34 13, 44 16, 50 24 C56 16, 66 13, 74 18 C98 28, 85 45, 50 65 Z" fill="none" stroke="gold" stroke-width="4"/><path d="M10 38 L32 38 L38 26 L44 50 L50 34 L58 42 L72 38 L90 38" fill="none" stroke="gold" stroke-width="3" stroke-linecap="round"/></svg>
     <h1>نبض</h1>
@@ -51,8 +47,6 @@ body{background:#020617 url('https://images.unsplash.com/photo-1534796636912-3b9
     <button id="authBtn" onclick="handleAuth()">تسجيل الدخول</button>
     <p class="switch" id="switchMode" onclick="toggleAuthMode()">ليس لديك حساب؟ إنشاء حساب</p>
   </div>
-
-  <!-- شاشة الدردشات -->
   <div id="listView">
     <div class="header">
       <div class="logo">نبض</div>
@@ -64,8 +58,6 @@ body{background:#020617 url('https://images.unsplash.com/photo-1534796636912-3b9
       <button onclick="startChat()" style="padding:12px 20px;border-radius:15px;border:none;background:#00ff99;color:#020617;font-weight:900;cursor:pointer">بدء</button>
     </div>
   </div>
-
-  <!-- شاشة المحادثة -->
   <div id="chatView">
     <div class="header">
       <button onclick="closeChat()" style="background:none;border:none;color:#00ff99;font-size:24px;cursor:pointer">›</button>
@@ -78,122 +70,87 @@ body{background:#020617 url('https://images.unsplash.com/photo-1534796636912-3b9
     </div>
   </div>
 </div>
-
 <script type="module">
   let isLogin = true;
   let currentConversationId = null;
   let currentUser = null;
   let currentUserName = null;
 
-  // التبديل بين تسجيل الدخول وإنشاء الحساب
   window.toggleAuthMode = () => {
     isLogin = !isLogin;
     document.getElementById('authBtn').innerText = isLogin ? 'تسجيل الدخول' : 'إنشاء حساب';
     document.getElementById('switchMode').innerText = isLogin ? 'ليس لديك حساب؟ إنشاء حساب' : 'لديك حساب؟ تسجيل الدخول';
   };
 
-  // التعامل مع المصادقة
   window.handleAuth = async () => {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     if (!email || !password) return alert('يرجى ملء جميع الحقول');
-    
     let result;
     if (isLogin) {
       result = await window.supabase.auth.signInWithPassword({ email, password });
     } else {
       result = await window.supabase.auth.signUp({ email, password });
       if (!result.error) {
-        // إنشاء ملف شخصي بعد التسجيل
-        const { data: { user } } = await window.supabase.auth.getUser();
+        const { data: { user } } = await window.supabase.auth.getUser(); if(user){ await window.supabase.from('profiles').insert({ id: user.id, username: email.split('@')[0] }); }
         if (user) {
           await window.supabase.from('profiles').insert({ id: user.id, username: email.split('@')[0] });
         }
-        alert('تم إنشاء الحساب! يمكنك الآن تسجيل الدخول.');
+        alert('تم إنشاء الحساب بنجاح! جاري تسجيل الدخول...');
         isLogin = true;
         document.getElementById('authBtn').innerText = 'تسجيل الدخول';
         return;
       }
     }
-    
-    if (result.error) {
-      alert(result.error.message);
-    } else {
-      currentUser = result.data.user;
-      await initUser();
-    }
+    if (result.error) alert(result.error.message);
+    else { currentUser = result.data.user; await initUser(); }
   };
 
-  // تسجيل الخروج
-  window.logout = async () => {
-    await window.supabase.auth.signOut();
-    location.reload();
-  };
+  window.logout = async () => { await window.supabase.auth.signOut(); location.reload(); };
 
-  // التهيئة بعد الدخول
   async function initUser() {
-    const { data: { user } } = await window.supabase.auth.getUser();
+    const { data: { user } } = await window.supabase.auth.getUser(); if(user){ await window.supabase.from('profiles').insert({ id: user.id, username: email.split('@')[0] }); }
     if (!user) return;
     currentUser = user;
-    
-    // جلب اسم المستخدم
     const { data: profile } = await window.supabase.from('profiles').select('username').eq('id', user.id).single();
     currentUserName = profile ? profile.username : 'مستخدم';
-
     document.getElementById('authScreen').style.display = 'none';
     document.getElementById('listView').style.display = 'flex';
     await loadConversations();
     setupRealtime();
   }
 
-  // جلب المحادثات
   async function loadConversations() {
-    const { data, error } = await window.supabase
-      .from('conversations')
-      .select('*, user1_profile:profiles!conversations_user1_fkey(username), user2_profile:profiles!conversations_user2_fkey(username)')
-      .or(`user1.eq.${currentUser.id},user2.eq.${currentUser.id}`);
-
+    const { data } = await window.supabase.from('conversations').select('*, user1_profile:profiles!conversations_user1_fkey(username), user2_profile:profiles!conversations_user2_fkey(username)').or(`user1.eq.${currentUser.id},user2.eq.${currentUser.id}`);
     const chatList = document.getElementById('chatList');
     chatList.innerHTML = '';
-    
     if (data) {
       data.forEach(conv => {
         const otherUser = conv.user1 === currentUser.id ? conv.user2_profile.username : conv.user1_profile.username;
         const div = document.createElement('div');
         div.className = 'chat-card';
         div.onclick = () => openChat(conv.id, otherUser);
-        div.innerHTML = `<div class="avatar">${otherUser[0]}</div><div style="flex:1"><div style="font-weight:900">${otherUser}</div><div style="font-size:12px;opacity:0.7">اضغط للمحادثة</div></div>`;
+        div.innerHTML = `<div class="avatar">${otherUser[0]}</div><div style="flex:1"><div style="font-weight:900">${otherUser}</div></div>`;
         chatList.appendChild(div);
       });
     }
   }
 
-  // بدء محادثة جديدة
   window.startChat = async () => {
     const username = document.getElementById('newChatUser').value.trim();
     if (!username) return;
-
-    // البحث عن المستخدم
     const { data: profile, error } = await window.supabase.from('profiles').select('id').eq('username', username).single();
     if (error || !profile) return alert('المستخدم غير موجود');
-
-    // التحقق من وجود محادثة سابقة
     const { data: existing } = await window.supabase.from('conversations').select('id').or(`and(user1.eq.${currentUser.id},user2.eq.${profile.id}),and(user1.eq.${profile.id},user2.eq.${currentUser.id})`).single();
-    
-    if (existing) {
-      openChat(existing.id, username);
-    } else {
-      const { data: newConv, error: createErr } = await window.supabase.from('conversations').insert({ user1: currentUser.id, user2: profile.id }).select().single();
-      if (createErr) alert('خطأ في إنشاء المحادثة');
-      else {
-        await loadConversations();
-        openChat(newConv.id, username);
-      }
+    if (existing) openChat(existing.id, username);
+    else {
+      const { data: newConv } = await window.supabase.from('conversations').insert({ user1: currentUser.id, user2: profile.id }).select().single();
+      await loadConversations();
+      openChat(newConv.id, username);
     }
     document.getElementById('newChatUser').value = '';
   };
 
-  // فتح دردشة
   window.openChat = async (convId, username) => {
     currentConversationId = convId;
     document.getElementById('chatName').innerText = username;
@@ -202,16 +159,14 @@ body{background:#020617 url('https://images.unsplash.com/photo-1534796636912-3b9
     await loadMessages(convId);
   };
 
-  // إغلاق الدردشة
   window.closeChat = () => {
     document.getElementById('chatView').style.display = 'none';
     document.getElementById('listView').style.display = 'flex';
     currentConversationId = null;
   };
 
-  // تحميل الرسائل
   async function loadMessages(convId) {
-    const { data, error } = await window.supabase.from('messages').select('*').eq('conversation_id', convId).order('created_at', { ascending: true });
+    const { data } = await window.supabase.from('messages').select('*').eq('conversation_id', convId).order('created_at', { ascending: true });
     const msgsContainer = document.getElementById('msgs');
     msgsContainer.innerHTML = '';
     if (data) {
@@ -220,7 +175,6 @@ body{background:#020617 url('https://images.unsplash.com/photo-1534796636912-3b9
     }
   }
 
-  // إضافة فقاعة
   function addBubble(text, isMe, time) {
     const div = document.createElement('div');
     div.className = `bubble ${isMe ? 'me' : 'other'}`;
@@ -229,33 +183,22 @@ body{background:#020617 url('https://images.unsplash.com/photo-1534796636912-3b9
     document.getElementById('msgs').scrollTop = document.getElementById('msgs').scrollHeight;
   }
 
-  // إرسال رسالة
   window.sendMsg = async () => {
     const inp = document.getElementById('msgInput');
     if (!inp.value.trim() || !currentConversationId) return;
-    const text = inp.value;
-    await window.supabase.from('messages').insert({ conversation_id: currentConversationId, sender_id: currentUser.id, text });
+    await window.supabase.from('messages').insert({ conversation_id: currentConversationId, sender_id: currentUser.id, text: inp.value });
     inp.value = '';
   };
 
-  // الاستماع للرسائل الجديدة (Realtime)
   function setupRealtime() {
-    window.supabase.channel('custom-all-channel')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, payload => {
-        const newMsg = payload.new;
-        if (newMsg.conversation_id === currentConversationId) {
-          addBubble(newMsg.text, newMsg.sender_id === currentUser.id, newMsg.created_at);
-        }
-      })
-      .subscribe();
+    window.supabase.channel('custom-all-channel').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, payload => {
+      const newMsg = payload.new;
+      if (newMsg.conversation_id === currentConversationId) addBubble(newMsg.text, newMsg.sender_id === currentUser.id, newMsg.created_at);
+    }).subscribe();
   }
 
-  // التهيئة عند بدء التطبيق
   const { data: { session } } = await window.supabase.auth.getSession();
-  if (session) {
-    currentUser = session.user;
-    await initUser();
-  }
+  if (session) { currentUser = session.user; await initUser(); }
 </script>
 </body>
 </html>
