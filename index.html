@@ -11,18 +11,15 @@
   window.supabase = supabase;
 </script>
 <style>
+/* التصميم الأصلي الخاص بك بالكامل كما هو */
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:#eef2ff;min-height:100vh;color:#1e293b;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px at 10% 0%, rgba(91,141,239,.18), transparent),radial-gradient(600px at 90% 100%, rgba(139,92,246,.15), transparent);pointer-events:none}
 .app{max-width:430px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;padding-bottom:90px}
-
-/* هيدر */
 .header{margin:14px;padding:12px 16px;background:rgba(255,255,255,.85);border:1px solid rgba(91,141,239,.15);border-radius:20px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 8px 24px rgba(91,141,239,.12), inset 0 1px 0 rgba(255,255,255,.9)}
 .logo{font-size:28px;font-weight:900;color:#3b82f6;display:flex;align-items:center;gap:8px}
 .logo b{color:#8b5cf6}
 .hBtn{width:36px;height:36px;border-radius:12px;background:#fff;border:1px solid rgba(91,141,239,.15);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.06)}
-
-/* جزيرة البحث الفاتحة */
 .island{margin:0 14px;width:calc(100% - 28px);padding:14px 18px;background:rgba(255,255,255,.9);border:1px solid rgba(91,141,239,.2);border-radius:20px;display:flex;align-items:center;gap:12px;cursor:pointer;box-shadow:0 8px 24px rgba(91,141,239,.12), inset 0 1px 0 #fff;transition:.35s cubic-bezier(.4,0,.2,1)}
 .island.expanded{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:100vh;z-index:100;border-radius:0;padding:20px;background:rgba(238,242,255,.96);backdrop-filter:blur(16px);flex-direction:column;align-items:stretch}
 .dot{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#5b8def,#8b5cf6);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;box-shadow:0 4px 12px rgba(91,141,239,.3)}
@@ -33,8 +30,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
 .sugGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .sug{padding:12px;background:#fff;border:1px solid rgba(91,141,239,.12);border-radius:14px;display:flex;gap:10px;align-items:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.04)}
 .sug img{width:36px;height:36px;border-radius:50%}
-
-/* قصص */
 .stories{display:flex;gap:14px;overflow-x:auto;padding:8px 2px 12px;scrollbar-width:none}
 .stories::-webkit-scrollbar{display:none}
 .story{flex-shrink:0;text-align:center;cursor:pointer}
@@ -43,8 +38,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
 .bubbleWrap img{width:54px;height:54px;border-radius:50%;object-fit:cover;border:2px solid #fff}
 .bubbleWrap.add{background:rgba(255,255,255,.6);border:2px dashed rgba(139,92,246,.3)}
 .stName{font-size:11px;margin-top:6px;color:#475569;font-weight:600}
-
-/* محادثات */
 .block{margin:16px 14px 0}
 .bTitle{font-weight:800;font-size:16px;margin-bottom:10px;color:#1e293b;display:flex;justify-content:space-between}
 .chat{padding:12px;background:#fff;border:1px solid rgba(91,141,239,.1);border-radius:18px;display:flex;gap:12px;align-items:center;margin-bottom:10px;cursor:pointer;box-shadow:0 4px 16px rgba(91,141,239,.08), inset 0 1px 0 #fff;transition:.2s}
@@ -56,13 +49,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
 .cLast{font-size:12.5px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
 .cMeta{font-size:11px;color:#94a3b8;text-align:left;flex-shrink:0}
 .badge{background:linear-gradient(135deg,#5b8def,#8b5cf6);color:#fff;min-width:22px;height:22px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:4px;box-shadow:0 2px 8px rgba(91,141,239,.3)}
-
 .bottom{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);width:calc(100% - 28px);max-width:400px;background:rgba(255,255,255,.88);backdrop-filter:blur(16px);border:1px solid rgba(91,141,239,.15);border-radius:22px;display:grid;grid-template-columns:repeat(4,1fr);padding:8px;box-shadow:0 12px 32px rgba(91,141,239,.15);z-index:20}
 .navItem{text-align:center;font-size:10px;color:#94a3b8;cursor:pointer;font-weight:600}
 .navItem.active{color:#5b8def}
 .navItem i{font-size:20px;display:block;margin-bottom:2px;font-style:normal}
-
-/* محادثة */
 #chatView{position:fixed;inset:0;max-width:430px;margin:0 auto;background:#eef2ff;display:none;flex-direction:column;z-index:90}
 .bubbles{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
 .bubble{max-width:78%;padding:12px 14px;border-radius:18px;font-size:14px;line-height:1.5;box-shadow:0 2px 12px rgba(0,0,0,.06)}
@@ -74,9 +64,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
 </style>
 </head>
 <body>
-<div class="app" id="listView" style="display:none">
-  <div class="header"><div class="logo">نبض <b>♡</b></div><div style="display:flex;gap:8px"><div class="hBtn" onclick="newChat()">💬+</div><div class="hBtn" onclick="logout()">🚪</div></div></div>
-
+<div class="app" id="listView">
+  <div class="header"><div class="logo">نبض <b>♡</b></div><div style="display:flex;gap:8px"><div class="hBtn" onclick="openModal()">💬+</div><div class="hBtn">⋯</div></div></div>
   <div class="island" id="island" onclick="if(!this.classList.contains('expanded')) expand()">
     <div class="dot">⌕</div>
     <input id="searchI" placeholder="ابحث في المحادثات..." oninput="doFilter(this.value)" onfocus="expand()">
@@ -89,215 +78,144 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 
       <div style="margin-top:20px;padding:14px;background:#fff;border-radius:14px;text-align:center;border:1px solid rgba(91,141,239,.1);cursor:pointer" onclick="collapse()">إغلاق ←</div>
     </div>
   </div>
-
   <div class="block"><div class="bTitle"><span>القصص</span><span style="color:#5b8def;font-size:12px">عرض الكل</span></div><div class="stories" id="storiesMain"></div></div>
   <div class="block"><div class="bTitle"><span>الدردشات</span><span style="color:#8b5cf6;font-size:12px" id="count"></span></div><div id="chatList"></div></div>
-
   <div class="bottom">
     <div class="navItem active"><i>💬</i>الدردشات</div>
-    <div class="navItem" onclick="alert('المكالمات قريباً')"><i>📞</i>مكالمات</div>
+    <div class="navItem" onclick="toast('المكالمات قريباً')"><i>📞</i>مكالمات</div>
     <div class="navItem" onclick="openStatus()"><i>📷</i>حالات</div>
-    <div class="navItem" onclick="logout()"><i>⚙️</i>خروج</div>
+    <div class="navItem" onclick="toast('الإعدادات')"><i>⚙️</i>إعدادات</div>
   </div>
 </div>
-
 <div id="chatView">
-  <div class="header"><div class="hBtn" onclick="closeChat()">‹</div><div style="flex:1;display:flex;gap:10px;align-items:center"><div id="cvImg" class="cAv" style="display:flex;justify-content:center;align-items:center;font-weight:900;background:#1e293b;color:#60a5fa;"></div><div><div id="cvName" style="font-weight:800;font-size:14px"></div><div style="font-size:11px;color:#22c55e">متصل الآن</div></div></div></div>
+  <div class="header"><div class="hBtn" onclick="closeChat()">‹</div><div style="flex:1;display:flex;gap:10px;align-items:center"><img id="cvImg" class="cAv" style="width:38px;height:38px"><div><div id="cvName" style="font-weight:800;font-size:14px"></div><div style="font-size:11px;color:#22c55e">متصل الآن</div></div></div><div class="hBtn">📞</div><div class="hBtn">🎥</div></div>
   <div class="bubbles" id="bubbles"></div>
-  <div class="inputBar"><input id="msgInp" placeholder="اكتب رسالة..." onkeydown="if(event.key==='Enter')send()"><button class="sendBtn" onclick="send()">➤</button></div>
+  <div class="inputBar"><div class="hBtn">＋</div><input id="msgInp" placeholder="اكتب رسالة..." onkeydown="if(event.key==='Enter')send()"><button class="sendBtn" onclick="send()">➤</button></div>
+</div>
+<div id="statusView" style="display:none;position:fixed;inset:0;background:#eef2ff;padding:20px;flex-direction:column;z-index:95">
+  <div style="display:flex;justify-content:space-between;margin-bottom:20px"><h2>الحالات</h2><button onclick="closeStatus()">✕</button></div>
+  <button onclick="addMyStatus()" style="padding:10px;background:#5b8def;color:#fff;border:none;border-radius:10px;margin-bottom:15px">+ إضافة حالة</button>
+  <div id="statusList"></div>
 </div>
 
 <script type="module">
-  let isLogin = true;
+  let users = [];
   let currentUser = null;
-  let currentConversationId = null;
-  let currentChatName = null;
+  let currentChatId = null;
   let currentUserName = null;
+  let isLogin = true;
 
-  // شاشة تسجيل الدخول
+  // إضافة شاشة الدخول
   const authScreen = document.createElement('div');
   authScreen.id = 'authScreen';
-  authScreen.style.cssText = 'position:fixed;inset:0;background:#eef2ff;z-index:200;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:30px;gap:15px';
-  authScreen.innerHTML = `
-    <h1 style="font-size:48px;color:#3b82f6;text-shadow:0 0 20px rgba(59,130,246,0.3)">نبض</h1>
-    <input type="text" id="username" placeholder="اسم المستخدم" style="width:100%;max-width:350px;padding:15px;border-radius:15px;border:1px solid #3b82f6;background:#fff;color:#1e293b;font-size:16px;text-align:center;outline:none">
-    <input type="password" id="password" placeholder="كلمة المرور" style="width:100%;max-width:350px;padding:15px;border-radius:15px;border:1px solid #3b82f6;background:#fff;color:#1e293b;font-size:16px;text-align:center;outline:none">
-    <button id="authBtn" onclick="handleAuth()" style="width:100%;max-width:350px;padding:15px;border-radius:15px;border:none;background:linear-gradient(135deg,#5b8def,#8b5cf6);color:#fff;font-weight:900;font-size:18px;cursor:pointer;box-shadow:0 4px 15px rgba(91,141,239,0.4)">تسجيل الدخول</button>
-    <p class="switch" id="switchMode" onclick="toggleAuthMode()" style="color:#8b5cf6;cursor:pointer;text-decoration:underline;font-size:14px">ليس لديك حساب؟ إنشاء حساب</p>
-  `;
+  authScreen.style.cssText = 'position:fixed;inset:0;background:#eef2ff;z-index:100;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;padding:20px';
+  authScreen.innerHTML = `<h1 style="color:#3b82f6">نبض</h1><input id="user" placeholder="اسم المستخدم" style="padding:10px;border-radius:10px;border:1px solid #ccc"><input id="pass" type="password" placeholder="كلمة المرور" style="padding:10px;border-radius:10px;border:1px solid #ccc"><button onclick="handleAuth()" style="padding:10px 20px;background:#5b8def;color:#fff;border:none;border-radius:10px">دخول / تسجيل</button>`;
   document.body.appendChild(authScreen);
 
-  window.toggleAuthMode = () => {
-    isLogin = !isLogin;
-    document.getElementById('authBtn').innerText = isLogin ? 'تسجيل الدخول' : 'إنشاء حساب';
-    document.getElementById('switchMode').innerText = isLogin ? 'ليس لديك حساب؟ إنشاء حساب' : 'لديك حساب؟ تسجيل الدخول';
-  };
-
   window.handleAuth = async () => {
-    const usernameInput = document.getElementById('username').value;
-    const username = usernameInput.trim().replace(/\s+/g, '').replace(/[^a-zA-Z0-9_]/g, '');
-    const password = document.getElementById('password').value;
-    if (!username || !password) return alert('يرجى ملء جميع الحقول');
-    const email = username + '@nabd.app';
-    let result;
-    if (isLogin) {
-      result = await window.supabase.auth.signInWithPassword({ email, password });
-    } else {
-      result = await window.supabase.auth.signUp({ email, password });
-      if (!result.error) {
+    const u = document.getElementById('user').value.trim().replace(/[^a-zA-Z0-9]/g,'');
+    const p = document.getElementById('pass').value;
+    const email = u + '@nabd.app';
+    let res = await window.supabase.auth.signInWithPassword({email, password:p});
+    if (res.error) {
+      res = await window.supabase.auth.signUp({email, password:p});
+      if (!res.error) {
         const { data: { user } } = await window.supabase.auth.getUser();
-        if (user) await window.supabase.from('profiles').insert({ id: user.id, username: username });
-        result = await window.supabase.auth.signInWithPassword({ email, password });
+        if (user) await window.supabase.from('profiles').insert({id: user.id, username: u});
+        res = await window.supabase.auth.signInWithPassword({email, password:p});
       }
     }
-    if (result.error) alert(result.error.message);
-    else { currentUser = result.data.user; await initUser(); }
+    if (res.error) alert(res.error.message);
+    else { currentUser = res.data.user; authScreen.style.display='none'; document.getElementById('listView').style.display='block'; loadChats(); }
   };
 
-  window.logout = async () => { await window.supabase.auth.signOut(); location.reload(); };
-
-  async function initUser() {
-    const { data: { user } } = await window.supabase.auth.getUser();
-    if (!user) return;
-    currentUser = user;
-    const { data: profile } = await window.supabase.from('profiles').select('username').eq('id', user.id).single();
-    currentUserName = profile ? profile.username : 'مستخدم';
-    document.getElementById('authScreen').style.display = 'none';
-    document.getElementById('listView').style.display = 'flex';
-    await loadConversations();
-    setupRealtime();
+  // دالة تحميل المحادثات من قاعدة البيانات
+  async function loadChats() {
+    const { data } = await window.supabase.from('conversations').select('*, u1:profiles!conversations_user1_fkey(username), u2:profiles!conversations_user2_fkey(username)').or(`user1.eq.${currentUser.id},user2.eq.${currentUser.id}`);
+    const list = document.getElementById('chatList');
+    list.innerHTML = data ? data.map(c => {
+      const other = c.user1 === currentUser.id ? c.u2.username : c.u1.username;
+      return `<div class="chat" onclick="openChat(${c.id}, '${other}')"><div class="cAv" style="display:flex;justify-content:center;align-items:center;background:#1e293b;color:#60a5fa;">${other[0]}</div><div class="cInfo"><div class="cName">${other}</div></div></div>`;
+    }).join('') : '';
   }
 
-  async function loadConversations() {
-    const { data } = await window.supabase.from('conversations').select('*, user1_profile:profiles!conversations_user1_fkey(username), user2_profile:profiles!conversations_user2_fkey(username)').or(`user1.eq.${currentUser.id},user2.eq.${currentUser.id}`);
-    const chatList = document.getElementById('chatList');
-    chatList.innerHTML = '';
-    if (data) {
-      data.forEach(conv => {
-        const otherUser = conv.user1 === currentUser.id ? conv.user2_profile.username : conv.user1_profile.username;
-        const div = document.createElement('div');
-        div.className = 'chat';
-        div.onclick = () => openChat(conv.id, otherUser);
-        div.innerHTML = `<div class="cAv" style="display:flex;justify-content:center;align-items:center;background:#1e293b;font-weight:900;color:#60a5fa;">${otherUser[0]}</div><div class="cInfo"><div class="cName">${otherUser}</div><div class="cLast">اضغط للمحادثة</div></div>`;
-        chatList.appendChild(div);
-      });
-    }
-  }
-
-  window.newChat = async () => {
-    const username = prompt('ابحث عن اسم المستخدم:');
-    if (!username) return;
-    const { data: profile, error } = await window.supabase.from('profiles').select('id').eq('username', username).single();
-    if (error || !profile) return alert('المستخدم غير موجود');
+  window.openModal = async () => {
+    const name = prompt('اسم المستخدم:');
+    if(!name) return;
+    const { data: profile } = await window.supabase.from('profiles').select('id').eq('username', name).single();
+    if(!profile) return alert('غير موجود');
     const { data: existing } = await window.supabase.from('conversations').select('id').or(`and(user1.eq.${currentUser.id},user2.eq.${profile.id}),and(user1.eq.${profile.id},user2.eq.${currentUser.id})`).single();
-    if (existing) openChat(existing.id, username);
+    if(existing) openChat(existing.id, name);
     else {
-      const { data: newConv } = await window.supabase.from('conversations').insert({ user1: currentUser.id, user2: profile.id }).select().single();
-      await loadConversations();
-      openChat(newConv.id, username);
+      const { data: newConv } = await window.supabase.from('conversations').insert({user1: currentUser.id, user2: profile.id}).select().single();
+      loadChats();
+      openChat(newConv.id, name);
     }
   };
 
-  window.openChat = async (convId, username) => {
-    currentConversationId = convId;
-    currentChatName = username;
-    document.getElementById('cvName').innerText = username;
-    document.getElementById('cvImg').innerText = username[0];
-    document.getElementById('listView').style.display = 'none';
-    document.getElementById('chatView').style.display = 'flex';
-    await loadMessages(convId);
+  window.openChat = async (id, name) => {
+    currentChatId = id;
+    document.getElementById('cvName').innerText = name;
+    document.getElementById('listView').style.display='none';
+    document.getElementById('chatView').style.display='flex';
+    const { data } = await window.supabase.from('messages').select('*').eq('conversation_id', id).order('created_at');
+    document.getElementById('bubbles').innerHTML = data ? data.map(m => `<div class="bubble ${m.sender_id === currentUser.id ? 'me' : 'other'}">${m.text}</div>`).join('') : '';
   };
-
-  window.closeChat = () => {
-    document.getElementById('chatView').style.display = 'none';
-    document.getElementById('listView').style.display = 'flex';
-    currentConversationId = null;
-  };
-
-  async function loadMessages(convId) {
-    const { data } = await window.supabase.from('messages').select('*').eq('conversation_id', convId).order('created_at', { ascending: true });
-    const bubbles = document.getElementById('bubbles');
-    bubbles.innerHTML = '';
-    if (data) {
-      data.forEach(m => addBubble(m.text, m.sender_id === currentUser.id));
-      bubbles.scrollTop = bubbles.scrollHeight;
-    }
-  }
-
-  function addBubble(text, isMe) {
-    const div = document.createElement('div');
-    div.className = `bubble ${isMe ? 'me' : 'other'}`;
-    div.innerHTML = text;
-    document.getElementById('bubbles').appendChild(div);
-    document.getElementById('bubbles').scrollTop = document.getElementById('bubbles').scrollHeight;
-  }
 
   window.send = async () => {
     const inp = document.getElementById('msgInp');
-    if (!inp.value.trim() || !currentConversationId) return;
+    if(!inp.value.trim() || !currentChatId) return;
     const text = inp.value;
-    await window.supabase.from('messages').insert({ conversation_id: currentConversationId, sender_id: currentUser.id, text });
+    await window.supabase.from('messages').insert({conversation_id: currentChatId, sender_id: currentUser.id, text});
     inp.value = '';
+    openChat(currentChatId, document.getElementById('cvName').innerText);
   };
 
-  function setupRealtime() {
-    window.supabase.channel('custom-all-channel').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, payload => {
-      const newMsg = payload.new;
-      if (newMsg.conversation_id === currentConversationId) addBubble(newMsg.text, newMsg.sender_id === currentUser.id);
-    }).subscribe();
-  }
+  window.closeChat = () => {
+    document.getElementById('chatView').style.display='none';
+    document.getElementById('listView').style.display='block';
+  };
 
-  // --- الحالات (Status) ---
+  // الحالات
   window.openStatus = async () => {
-    const statusView = document.getElementById('statusView');
-    statusView.style.display = 'flex';
-    document.getElementById('listView').style.display = 'none';
-    const { data } = await window.supabase.from('statuses').select('*').order('created_at', { ascending: false }).limit(20);
-    const list = document.getElementById('statusList');
-    list.innerHTML = '';
-    if (data) {
-      data.forEach(s => {
-        const div = document.createElement('div');
-        div.className = 'statusCard';
-        div.innerHTML = `<img src="${s.content}" class="statusImg"><div><div style="font-weight:900">${s.username}</div><div style="font-size:12px;color:#64748b">${new Date(s.created_at).toLocaleTimeString()}</div></div>`;
-        list.appendChild(div);
-      });
-    }
+    document.getElementById('listView').style.display='none';
+    document.getElementById('statusView').style.display='flex';
+    const { data } = await window.supabase.from('statuses').select('*').order('created_at', {ascending:false}).limit(20);
+    document.getElementById('statusList').innerHTML = data ? data.map(s => `<div style="background:#fff;padding:10px;margin-bottom:5px;border-radius:10px">${s.username}: ${new Date(s.created_at).toLocaleTimeString()}</div>`).join('') : '';
   };
 
   window.closeStatus = () => {
-    document.getElementById('statusView').style.display = 'none';
-    document.getElementById('listView').style.display = 'flex';
+    document.getElementById('statusView').style.display='none';
+    document.getElementById('listView').style.display='block';
   };
 
   window.addMyStatus = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
+    const inp = document.createElement('input'); inp.type='file'; inp.accept='image/*';
+    inp.onchange = (e) => {
+      const file = e.target.files[0]; if(!file) return;
       const reader = new FileReader();
-      reader.onload = async (event) => {
+      reader.onload = async (ev) => {
         const img = new Image();
         img.onload = async () => {
-          const canvas = document.createElement('canvas');
-          canvas.width = 720;
-          canvas.height = img.height / img.width * 720;
-          canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-          const compressed = canvas.toDataURL('image/jpeg', 0.6);
-          await window.supabase.from('statuses').insert({ username: currentUserName, content: compressed });
+          const c = document.createElement('canvas'); c.width=720; c.height=img.height/img.width*720;
+          c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+          const comp = c.toDataURL('image/jpeg',0.6);
+          await window.supabase.from('statuses').insert({username: currentUserName || 'مستخدم', content: comp});
           openStatus();
         };
-        img.src = event.target.result;
+        img.src = ev.target.result;
       };
       reader.readAsDataURL(file);
     };
-    input.click();
+    inp.click();
   };
 
+  window.toast = (t) => alert(t);
+  window.expand = () => { document.getElementById('island').classList.add('expanded'); document.getElementById('closeX').style.display='block'; document.getElementById('searchI').focus(); };
+  window.collapse = () => { document.getElementById('island').classList.remove('expanded'); document.getElementById('closeX').style.display='none'; };
+
   const { data: { session } } = await window.supabase.auth.getSession();
-  if (session) { currentUser = session.user; await initUser(); }
+  if (session) { currentUser = session.user; authScreen.style.display='none'; document.getElementById('listView').style.display='block'; loadChats(); }
 </script>
 </body>
 </html>
